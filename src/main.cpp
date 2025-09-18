@@ -39,7 +39,7 @@ void Update(){
 }
 
 void andLogicInputSiswa(SampleLogic& logicClass){
-    cout << "Method and" ;
+    cout << "Method and" << endl ;
     int nilaiSiswa, persentaseKehadiran;
     cout << "Masukkan Nilai siswa: ";
     cin >> nilaiSiswa;
@@ -50,7 +50,7 @@ void andLogicInputSiswa(SampleLogic& logicClass){
 }
 
 void orLogicUjian(SampleLogic& logicClass){
-    cout << "Method or" ;
+    cout << "Method or" << endl ;
     bool pernyataan1, pernyataan2;
     cout << "Apakah siswa mengikuti seminar? (1 untuk ya, 0 untuk tidak): ";
     cin >> pernyataan1;
@@ -61,7 +61,7 @@ void orLogicUjian(SampleLogic& logicClass){
 }
 
 void notLogicPengumpulanTugas(SampleLogic& logicClass){
-    cout << "Method not";
+    cout << "Method not" << endl;
     bool pernyataan;
     cout << "Apakah tugas siswa sudah dikumpulkan? (1 untuk ya, 0 untuk tidak): ";
     cin >> pernyataan;
@@ -69,7 +69,7 @@ void notLogicPengumpulanTugas(SampleLogic& logicClass){
 }
 
 void xorLogicKasusBeasiswa(SampleLogic& logicClass){
-    cout << "Method xor";
+    cout << "Method xor" << endl;
     bool pernyataan1, pernyataan2;
     cout << "Apakah siswa memiliki keunggulan akademik? (1 untuk ya, 0 untuk tidak):";
     cin >> pernyataan1;

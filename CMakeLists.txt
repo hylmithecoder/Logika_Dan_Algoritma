@@ -7,8 +7,15 @@ set(SOURCE_CODE
     src/samplelogic.hpp
 )
 
+set(ALGORITMABENSIN
+    src/algoritmabensin.cpp
+    src/algoritmabensin.hpp
+)
+
 include_directories(
     src/
 )
 
 add_executable(${PROJECT_NAME} ${SOURCE_CODE})
+
+add_executable(AlgoritmaBensin ${ALGORITMABENSIN})
