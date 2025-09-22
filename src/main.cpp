@@ -54,7 +54,7 @@ void orLogicUjian(SampleLogic& logicClass){
     bool pernyataan1, pernyataan2;
     cout << "Apakah siswa mengikuti seminar? (1 untuk ya, 0 untuk tidak): ";
     cin >> pernyataan1;
-    cout << "Apakah siswa mengikuti seminar? (1 untuk ya, 0 untuk tidak): ";
+    cout << "Apakah siswa memiliki tugas tambahan? (1 untuk ya, 0 untuk tidak): ";
     cin >> pernyataan2;
 
     logicClass.orLogic(pernyataan1, pernyataan2);
