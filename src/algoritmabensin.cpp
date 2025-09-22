@@ -1,16 +1,5 @@
 #include <algoritmabensin.hpp>
 
-void AlgoritmaBensin::initHargaBensin(){
-    cout << "Pertalite (Hanya Angka): ";
-    hargaPertalite = inputHargaBensin();
-    cout << "Pertamax (Hanya Angka): ";
-    hargaPertamax = inputHargaBensin();
-    cout << "Dexlite (Hanya Angka): ";
-    hargaDexlite = inputHargaBensin();
-    cout << "Biosolar (Hanya Angka): ";
-    hargaBiosolar = inputHargaBensin();
-}
-
 void AlgoritmaBensin::checkJenisKendaraan(string& currentJenisKendaraan){
     if (currentJenisKendaraan == "Solar" || currentJenisKendaraan == "solar"){
         cout << "Jenis solar: ";

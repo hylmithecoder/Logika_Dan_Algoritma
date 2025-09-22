@@ -26,8 +26,6 @@ class AlgoritmaBensin{
             return total;
         }
 
-        void initHargaBensin();
-
         void checkJenisKendaraan(string& currentJenisKendaraan);
 
         int setHargaJual();
