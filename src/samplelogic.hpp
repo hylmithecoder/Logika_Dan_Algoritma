@@ -52,4 +52,9 @@ class SampleLogic{
         /* Cek apakah bilangan genap pakai % operator untuk mendapatkan sisa pembagian*/
         void cekBilanganGenap(int nilai);
         bool isLooping();
+
+        // Pertemuan 4
+        void ifElse();
+        void switchCase();
+        void whileCase();
 };

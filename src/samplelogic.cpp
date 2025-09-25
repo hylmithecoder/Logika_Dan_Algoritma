@@ -202,3 +202,49 @@ void SampleLogic::TrueTable(){
     }
 
 }
+
+// Pertemuan 4
+void SampleLogic::ifElse(){
+    cout << "Method ifElse" << endl;
+    int usia;
+    // Input usia
+    cout << "Masukkan usia Anda: ";
+    cin >> usia;
+    // Menentukan kategori usia
+    if (usia <= 12) {
+        cout << "Anda adalah Anak-anak." << endl;
+    } else if (usia <= 17) {
+        cout << "Anda adalah Remaja." << endl;
+    } else if (usia <= 64) {
+        cout << "Anda adalah Dewasa." << endl;
+    } else {
+        cout << "Anda adalah Lansia." << endl;
+    }
+}
+
+void SampleLogic::switchCase(){
+    cout << "Method switchCase" << endl;
+    int hari = 3;
+    switch (hari) {
+        case 1:
+            cout << "Senin" << endl;
+            break;
+        case 2:
+            cout << "Selasa" << endl;
+            break;
+        case 3:
+            cout << "Rabu" << endl;
+            break;
+        default:
+            cout << "Hari tidak valid" << endl;
+    }
+}
+
+void SampleLogic::whileCase(){
+    cout << "Method While case" << endl;
+    int i = 0;
+    while (i < 5) {
+        cout << "i adalah " << i << endl;
+        i++;
+    }
+}

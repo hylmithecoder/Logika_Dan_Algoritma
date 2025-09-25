@@ -1,4 +1,5 @@
 #include <samplelogic.hpp>
+#include <algoritmabensin.hpp>
 
 void Update(){
     SampleLogic logic;
@@ -88,6 +89,48 @@ void PertemuanKe2(){
     xorLogicKasusBeasiswa(logic);
 }
 
+
+int isValidLiter(AlgoritmaBensin& bensin){
+    cout << "Jumlah Liter : ";
+    cin >> bensin.jumlahLiter;
+    if (!bensin.jumlahLiter){
+        cout << "Hanya angka" << endl;
+        exit(0);
+    }
+    return bensin.jumlahLiter;
+}
+
+void PertemuanKe3(){
+    AlgoritmaBensin bensin;
+
+    cout << "Jenis Kendaraan : ";
+    cin >> bensin.jenisKendaraan;
+    isValidLiter(bensin);
+
+    bensin.checkJenisKendaraan(bensin.jenisKendaraan);
+    int currentHargaJual = bensin.setHargaJual();
+    int hargaAkhir = bensin.hargaBeli(currentHargaJual);
+
+    cout << "Jenis Kendaraan: " << bensin.jenisKendaraan << endl;
+    if (bensin.jenisSolar == ""){
+        cout << "Jenis Bensin: " << bensin.jenisBensin << endl;
+    } else {
+        cout << "Jenis Solar: " << bensin.jenisSolar << endl;
+    }
+    cout << "Jumlah Liter: " << bensin.jumlahLiter << " Liter"<< endl;
+    cout << "Harga Jual: Rp." << currentHargaJual << endl;
+    cout << "Harga Pajak: Rp." << bensin.hargaPajak << endl;
+    cout << "Harga Beli: Rp." << hargaAkhir << endl;
+}
+
+void PertemuanKe4(){
+    SampleLogic logic;
+
+    logic.ifElse();
+    logic.switchCase();
+    logic.whileCase();
+}
+
 void choiceModule(int request){
 
     switch (request)
@@ -99,16 +142,29 @@ void choiceModule(int request){
     case 2:
         PertemuanKe2();
         break;
+
+    case 3:
+        PertemuanKe3();
+        break;
+
+    case 4:
+        PertemuanKe4();
+        break;
         
     default:
         break;
     }
 }
 
+void loopPertemuan(int pertemuan){
+    for (int i = 1; i <= pertemuan; ++i){
+        cout << i << ". Pertemuan " << i << endl;
+    }
+}
+
 int setRequest(){
     cout << "Pilih Materi yang ingin di pilih" << endl;
-    cout << "1. Pertemuan 1" << endl;
-    cout << "2. Pertemuan 2" << endl;
+    loopPertemuan(4);
     int request;
     cin >> request;
     return request;

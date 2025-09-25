@@ -7,10 +7,10 @@ void AlgoritmaBensin::checkJenisKendaraan(string& currentJenisKendaraan){
         cout << jenisSolar;
         if (jenisSolar == "Dexlite" || jenisSolar == "dexlite"){
             setHarga = hargaDexlite;
-            cout << 'Jenis solar dexlite' << endl;
+            cout << "Jenis solar dexlite" << endl;
         } else {
             setHarga = hargaBiosolar;
-            cout << 'Jenis solar biosolar' << endl;
+            cout << "Jenis solar biosolar" << endl;
         }
     } else if (currentJenisKendaraan == "Bensin" || currentJenisKendaraan == "bensin"){
         cout << "Jenis bensin: " ;
@@ -46,26 +46,24 @@ int isValidLiter(){
     return bensinClass.jumlahLiter;
 }
 
-int main(){
-    // bensinClass.initHargaBensin();
+// int main(){
+//     cout << "Jenis Kendaraan : ";
+//     cin >> bensinClass.jenisKendaraan;
+//     isValidLiter();
 
-    cout << "Jenis Kendaraan : ";
-    cin >> bensinClass.jenisKendaraan;
-    isValidLiter();
+//     bensinClass.checkJenisKendaraan(bensinClass.jenisKendaraan);
+//     int currentHargaJual = bensinClass.setHargaJual();
+//     int hargaAkhir = bensinClass.hargaBeli(currentHargaJual);
 
-    bensinClass.checkJenisKendaraan(bensinClass.jenisKendaraan);
-    int currentHargaJual = bensinClass.setHargaJual();
-    int hargaAkhir = bensinClass.hargaBeli(currentHargaJual);
-
-    cout << "Jenis Kendaraan: " << bensinClass.jenisKendaraan << endl;
-    if (bensinClass.jenisSolar == ""){
-        cout << "Jenis Bensin: " << bensinClass.jenisBensin << endl;
-    } else {
-        cout << "Jenis Solar: " << bensinClass.jenisSolar << endl;
-    }
-    cout << "Jumlah Liter: " << bensinClass.jumlahLiter << " Liter"<< endl;
-    cout << "Harga Jual: Rp." << currentHargaJual << endl;
-    cout << "Harga Pajak: Rp." << bensinClass.hargaPajak << endl;
-    cout << "Harga Beli: Rp." << hargaAkhir << endl;
-    return 0;
-}
+//     cout << "Jenis Kendaraan: " << bensinClass.jenisKendaraan << endl;
+//     if (bensinClass.jenisSolar == ""){
+//         cout << "Jenis Bensin: " << bensinClass.jenisBensin << endl;
+//     } else {
+//         cout << "Jenis Solar: " << bensinClass.jenisSolar << endl;
+//     }
+//     cout << "Jumlah Liter: " << bensinClass.jumlahLiter << " Liter"<< endl;
+//     cout << "Harga Jual: Rp." << currentHargaJual << endl;
+//     cout << "Harga Pajak: Rp." << bensinClass.hargaPajak << endl;
+//     cout << "Harga Beli: Rp." << hargaAkhir << endl;
+//     return 0;
+// }
