@@ -240,6 +240,32 @@ void SampleLogic::switchCase(){
     }
 }
 
+void SampleLogic::jenisHari(){
+    int nomor_hari;
+    // Input nomor hari
+    cout << "Masukkan nomor hari (1-7): ";
+    cin >> nomor_hari;
+    // Menentukan jenis hari
+    if (nomor_hari == 1) {
+        cout << "Senin" << endl;
+    } else if (nomor_hari == 2) {
+        cout << "Selasa" << endl;
+    } else if (nomor_hari == 3) {
+        cout << "Rabu" << endl;
+    } else if (nomor_hari == 4) {
+        cout << "Kamis" << endl;
+    } else if (nomor_hari == 5) {
+        cout << "Jumat" << endl;
+    } else if (nomor_hari == 6) {
+        cout << "Sabtu" << endl;
+    } else if (nomor_hari == 7) {
+        cout << "Minggu" << endl;
+    } else {
+        cout << "Nomor hari tidak valid." << endl;
+    }
+
+}
+
 void SampleLogic::whileCase(){
     cout << "Method While case" << endl;
     int i = 0;
@@ -247,4 +273,60 @@ void SampleLogic::whileCase(){
         cout << "i adalah " << i << endl;
         i++;
     }
+}
+
+void SampleLogic::menentukanGajiKaryawanDariJam(){
+    int jamKerja;
+    float tarifPerJam = 20.0; // Tarif per jam kerja
+    float gaji;
+
+    // Input jam kerja
+    cout << "Masukkan jumlah jam kerja: ";
+    cin >> jamKerja;
+
+    // Menentukan gaji
+    if (jamKerja <= 40) {
+        gaji = jamKerja * tarifPerJam;
+    } else {
+        // Jam lembur
+        int jamLembur = jamKerja - 40;
+        gaji = (40 * tarifPerJam) + (jamLembur * tarifPerJam * 1.5);
+    }
+
+    cout << "Gaji karyawan adalah: $" << gaji << endl;
+}
+
+string SampleLogic::nilaiAkhir(int nilaiSiswa){
+    string nilaiHuruf;
+
+    if (nilaiSiswa >= 85){
+       nilaiHuruf = "A";   
+    } else {
+       if (nilaiSiswa >= 70){
+          nilaiHuruf = "B";
+       } else {
+          if (nilaiSiswa >= 55){
+              nilaiHuruf = "C";
+          } else {
+             if (nilaiSiswa >= 40){
+                nilaiHuruf = "D";
+             } else {
+                 nilaiHuruf = "E";
+             }
+          }
+       }
+    }
+
+    return nilaiHuruf;
+}
+
+void SampleLogic::soal1Algoritma(){
+    string nilaiHuruf;
+    int nilaiSiswa;
+
+    cout << "Masukkan Nilai Siswa: " ;
+    cin >> nilaiSiswa;
+    nilaiHuruf = nilaiAkhir(nilaiSiswa);
+    cout << "Nilai Siswa: " << nilaiSiswa << endl;
+    cout << "Nilai huruf: " << nilaiHuruf << endl;
 }

@@ -129,6 +129,13 @@ void PertemuanKe4(){
     logic.ifElse();
     logic.switchCase();
     logic.whileCase();
+    logic.jenisHari();
+    logic.menentukanGajiKaryawanDariJam();
+}
+
+void Soal1(){
+    SampleLogic logic;
+    logic.soal1Algoritma();
 }
 
 void choiceModule(int request){
@@ -149,6 +156,10 @@ void choiceModule(int request){
 
     case 4:
         PertemuanKe4();
+        break;
+
+    case 5:
+        Soal1();
         break;
         
     default:

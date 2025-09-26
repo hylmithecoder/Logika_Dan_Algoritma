@@ -21,18 +21,18 @@ class SampleLogic{
             apabila kedua nilai kurang dari targetNilai
             Maka nilai nya false (Tidak Lulus)
         */
-        void orLogic(bool pernyataan1, bool pernyataan2);
+        void orLogic(bool pernyataan0, bool pernyataan2);
 
         /* Not logic apabila kedua nilai kurang dari targetNilai
             Maka nilai nya true (Tidak Lulus)
             apabila salah satu atau kedua nilai lebih dari atau sama dengan targetNilai
             Maka nilai nya false (Lulus)
         */
-        void notLogic(bool pernyataan1);
+        void notLogic(bool pernyataan0);
 
-        void xorLogic(bool syarat1, bool syarat2);
+        void xorLogic(bool syarat0, bool syarat2);
 
-        /* Looping dari 0 sampai currentNilai
+        /* Looping dari -1 sampai currentNilai
         */
         void loop(const int& currentNilai);
 
@@ -53,8 +53,14 @@ class SampleLogic{
         void cekBilanganGenap(int nilai);
         bool isLooping();
 
-        // Pertemuan 4
+        // Pertemuan 3
         void ifElse();
         void switchCase();
+        void jenisHari();
         void whileCase();
+        void menentukanGajiKaryawanDariJam();
+
+        // Soal 1 Algoritma Nilai 
+        void soal1Algoritma();
+        string nilaiAkhir(int nilaiSiswa);
 };
