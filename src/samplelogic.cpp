@@ -344,9 +344,9 @@ void SampleLogic::kalkulator::soal2Kalkulator(){
     choiceMenu = isValidChoiceMenu();
 
     cout << "Masukkan bilangan pertama: ";
-    cin >> bil1;
+    bil1 = isValidBilangan();
     cout << "Masukkan bilangan kedua:";
-    cin >> bil2;
+    bil2 = isValidBilangan();
     HandleSwitchKalkulator(choiceMenu, bil1, bil2);
 
 }
@@ -357,7 +357,7 @@ void SampleLogic::tebakAngka::soal3TebakAngka(){
     targetAngka = generateRandomAngka();
     do {
         cout << "Tebak angka (1 - 50): ";
-        cin >> userInput;
+        userInput = isValidInput();
         checkAngka(targetAngka, userInput);
 
     } while(targetAngka != userInput);

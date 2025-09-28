@@ -82,6 +82,18 @@ class SampleLogic{
                 }
             }
 
+            int isValidBilangan(){
+                int bilangan;
+                cin >> bilangan;
+
+                if (!bilangan){
+                    cout << "Harus angka";
+                    exit(0);
+                } else {
+                    return bilangan;
+                }
+            }
+
             void HandleSwitchKalkulator(int currentChoice, int angka1, int angka2){
                 int hasil;
                 switch(currentChoice){
@@ -151,6 +163,18 @@ class SampleLogic{
             }
 
             void soal3TebakAngka();
+
+            int isValidInput(){
+                int input;
+                cin >> input;
+
+                if (!input){
+                    cout << "Hanya angka" << endl;
+                    exit(0);
+                } else {
+                    return input;
+                }
+            }
 
         };
         
