@@ -330,3 +330,35 @@ void SampleLogic::soal1Algoritma(){
     cout << "Nilai Siswa: " << nilaiSiswa << endl;
     cout << "Nilai huruf: " << nilaiHuruf << endl;
 }
+
+void SampleLogic::kalkulator::soal2Kalkulator(){
+    int choiceMenu, bil1, bil2;
+    double hasilAkhir;
+    cout << "Menu:\n"
+    "1. Penjumlahan\n"
+    "2. Pengurangan\n" 
+    "3. Perkalian\n"
+    "4. Pembagian\n"
+    "Pilih Menu: ";
+
+    choiceMenu = isValidChoiceMenu();
+
+    cout << "Masukkan bilangan pertama: ";
+    cin >> bil1;
+    cout << "Masukkan bilangan kedua:";
+    cin >> bil2;
+    HandleSwitchKalkulator(choiceMenu, bil1, bil2);
+
+}
+
+void SampleLogic::tebakAngka::soal3TebakAngka(){
+    srand(time(0));
+
+    targetAngka = generateRandomAngka();
+    do {
+        cout << "Tebak angka (1 - 50): ";
+        cin >> userInput;
+        checkAngka(targetAngka, userInput);
+
+    } while(targetAngka != userInput);
+}

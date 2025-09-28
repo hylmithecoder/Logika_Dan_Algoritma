@@ -63,4 +63,96 @@ class SampleLogic{
         // Soal 1 Algoritma Nilai 
         void soal1Algoritma();
         string nilaiAkhir(int nilaiSiswa);
+
+        // Soal 2 kalkulator sederhana
+        struct kalkulator {
+            void soal2Kalkulator();
+            int isValidChoiceMenu(){
+                int choiceMenu;
+                cin >> choiceMenu;
+
+                if (!choiceMenu){
+                    cout << "Harus angka";
+                    exit(0);
+                } else if (choiceMenu > 4){
+                    cout << "Pilih antara 1 - 4 saja";
+                    exit(0);
+                } else {
+                    return choiceMenu;
+                }
+            }
+
+            void HandleSwitchKalkulator(int currentChoice, int angka1, int angka2){
+                int hasil;
+                switch(currentChoice){
+                    case 1:
+                        hasil = penjumlahan(angka1, angka2);
+                        cout << "Hasil penjumlahan = " << hasil;
+                        break;
+
+                    case 2:
+                        hasil = pengurangan(angka1, angka2);
+                        cout << "Hasil pengurangan = " << hasil;
+                        break;
+
+                    case 3:
+                        hasil = perkalian(angka1, angka2);
+                        cout << "Hasil perkalian = " << hasil;
+                        break;
+
+                    case 4:
+                        hasil = pembagian(angka1, angka2);
+                        cout << "Hasil pembagian = " << hasil;
+                        break;
+                        
+                    default:
+                        exit(0);
+                        break;
+                }
+            }
+
+            int penjumlahan(int a, int b){
+                int total = a + b;
+                return total;
+            };
+            int pengurangan(int a, int b) {
+                int total = a -b;
+                return total;
+            };
+            int perkalian(int a, int b){
+                int total = a * b;
+                return total;
+            };
+            double pembagian(int a, int b){
+                double total = a / b;
+                return total;
+            };
+        };
+
+        struct tebakAngka
+        {
+            int targetAngka, userInput, countTebak = 1;
+            int generateRandomAngka(){
+                int min = 1, max = 50; 
+                return min + rand() % (max - min + 1);
+            }
+
+            void checkAngka(int target, int input){
+                if (input == target){
+                    cout << "Benar! anda menebak dalam " << countTebak<< " kali percobaan" << endl;
+                }
+                else if (input > target){
+                    cout << "Terlalu besar!" << endl;
+                } else {
+                    cout << "Terlalu kecil! " << endl;
+                }
+
+                countTebak += 1;
+            }
+
+            void soal3TebakAngka();
+
+        };
+        
+        
 };
