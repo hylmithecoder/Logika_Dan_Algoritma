@@ -220,6 +220,28 @@ class SampleLogic{
             // Soal2
             int literTersedia = 0, totalPenjualan;
             void Soal2();
+            void Soal2IfVersion();
+            void Soal2UpdateHandler(string req){
+                cout << "Method soal2 if version\n"
+                "Apakah ada pelanggan (ada/tidak): ";
+                cin >> req;
+                if (req == "ada"){
+                    cout << "Masukkan jumlah liter yang ingin dibeli: ";
+                    int literDibeli, totalPlusLiter, totalYangDibeli;
+                    literDibeli = validasiAngka();
+                    totalPlusLiter = totalDibeli(literDibeli);
+                    totalYangDibeli = totalPlusLiter + totalPlusPPN(totalPlusLiter);
+                    cout << "Liter: " << literDibeli << " L" << endl;
+                    cout << "Total plus liter: " << totalPlusLiter << endl;
+                    cout << "Total di beli: " << totalYangDibeli << endl;
+                    totalPenjualan += totalYangDibeli;
+                    literTersedia -= literDibeli;
+                    Soal2UpdateHandler(req);
+                } else {
+                    cout << "Total Penjualan Hari ini "<< totalPenjualan << endl;
+                    exit(0);
+                }
+            }
 
             int totalDibeli(int literDibeli){
                 int total = literDibeli * 10000;

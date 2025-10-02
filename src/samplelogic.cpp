@@ -381,6 +381,14 @@ void SampleLogic::LatihanPertemuan5::Soal1(){
 }
 
 void SampleLogic::LatihanPertemuan5::Soal2(){
+    string req;
+    cout << "If version atau tidak (iya/no): ";
+    cin >> req;
+    if (req == "iya"){
+        Soal2IfVersion();
+    } else {
+        return;
+    }
     cout << "Masukkan jumlah liter yang tersedia untuk hari ini: ";
     cin >> literTersedia;
 
@@ -401,4 +409,9 @@ void SampleLogic::LatihanPertemuan5::Soal2(){
         literTersedia -= literDibeli;
     }
     cout << "Total Penjualan Hari ini "<< totalPenjualan <<"\nLiter Tersedia sudah habis";
+}
+
+void SampleLogic::LatihanPertemuan5::Soal2IfVersion(){
+    string req;
+    Soal2UpdateHandler(req);
 }
