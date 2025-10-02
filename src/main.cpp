@@ -133,6 +133,16 @@ void PertemuanKe4(){
     logic.menentukanGajiKaryawanDariJam();
 }
 
+void LatihanPertemuanKe5Soal1(){
+    SampleLogic::LatihanPertemuan5 logic;
+    logic.Soal1();
+}
+
+void LatihanPertemuanKe5Soal2(){
+    SampleLogic::LatihanPertemuan5 logic;
+    logic.Soal2();
+}
+
 void Soal1(){
     SampleLogic logic;
     logic.soal1Algoritma();
@@ -146,6 +156,27 @@ void Soal2(){
 void Soal3(){
     SampleLogic::tebakAngka logic;
     logic.soal3TebakAngka();
+}
+
+void loopPertemuanKe5(int jumlahSoal){
+    for (int i = 1; i <= jumlahSoal; ++i){
+        cout << i << ". Soal " << i << endl;
+    }
+    int soal;
+    cin >> soal;
+    switch (soal)
+    {
+    case 1:
+        LatihanPertemuanKe5Soal1();
+        break;
+    
+    case 2:
+        LatihanPertemuanKe5Soal2();
+        break;
+
+    default:
+        break;
+    }
 }
 
 void choiceModule(int request){
@@ -179,7 +210,11 @@ void choiceModule(int request){
     case 7:
         Soal3();
         break;
-        
+
+    case 8:
+        loopPertemuanKe5(2);
+        break;
+
     default:
         break;
     }
@@ -202,6 +237,7 @@ int setRequest(){
     cout << "Pilih Materi atau soal yang ingin di pilih" << endl;
     loopPertemuan(4);
     loopSoal(7);
+    cout << "8. Latihan Pertemuan ke 5" << endl;
     int request;
     cin >> request;
     return request;

@@ -178,5 +178,58 @@ class SampleLogic{
 
         };
         
+        // Pertemuan 5
+        struct Pertemuan5{
+            void totalBilanganGenap();
+        };
+
+        struct LatihanPertemuan5
+        {
+            // Soal1
+            const int jumlahSiswa = 10; 
+            double totalIPK, ratarataIPK;
+
+            float jumlahIpk(int currentSiswa){
+                double total = 0;
+                double arraySiswa[currentSiswa];
+                for (int i = 0; i < currentSiswa; ++i){
+                    cout << "Masukkan ipk mahasiswa ke " << i + 1 << ": ";
+                    cin >> arraySiswa[i];
+                    total += arraySiswa[i];
+                }
+                return total;
+            }
+
+            float average(float totalIpk,int currentSiswa){
+                float total = totalIPK / currentSiswa;
+                return total;
+            }
+
+            void Soal1();
+
+            int validasiAngka(){
+                int angka;
+                cin >> angka;
+                if (!angka){
+                    cout << "Harus angka";
+                    exit(0);
+                }
+                return angka;
+            }
+
+            // Soal2
+            int literTersedia = 0, totalPenjualan;
+            void Soal2();
+
+            int totalDibeli(int literDibeli){
+                int total = literDibeli * 10000;
+                return total;
+            }
+
+            int totalPlusPPN(int currentHarga){
+                int total = currentHarga * 10 / 100;
+                return total;
+            }
+        };
         
 };

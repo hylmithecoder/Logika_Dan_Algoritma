@@ -362,3 +362,43 @@ void SampleLogic::tebakAngka::soal3TebakAngka(){
 
     } while(targetAngka != userInput);
 }
+
+void SampleLogic::Pertemuan5::totalBilanganGenap(){
+    cout << "Method mencari total bilangan genap" << endl;
+    int total = 0;
+    for (int i = 2; i <= 50; i += 2) { // Inisialisasi dengan 2, menambah 2 di setiap iterasi
+        total += i;
+    }
+    cout << "Total bilangan genap dari 1 hingga 50 adalah: " << total << endl;
+}
+
+void SampleLogic::LatihanPertemuan5::Soal1(){
+    cout << "Masukkan nilai IPK untuk 10 mahasiswa" << endl;
+    totalIPK = jumlahIpk(jumlahSiswa);
+    ratarataIPK = average(totalIPK, jumlahSiswa);
+    cout << "Total IPK dari " << jumlahSiswa << " Mahasiswa adalah: " << totalIPK << endl;
+    cout << "Rata-Rata Ipk dari " << jumlahSiswa << " Mahasiswa adalah: " << ratarataIPK << endl;
+}
+
+void SampleLogic::LatihanPertemuan5::Soal2(){
+    cout << "Masukkan jumlah liter yang tersedia untuk hari ini: ";
+    cin >> literTersedia;
+
+    while (literTersedia > 0){
+        cout << "Masukkan jumlah liter yang ingin dibeli: ";
+        int literDibeli, totalPlusLiter, totalYangDibeli;
+        literDibeli = validasiAngka();
+        if (literDibeli > literTersedia){
+            cout << "Melebihi liter tersedia" << endl;
+            exit(0);
+        }
+        totalPlusLiter = totalDibeli(literDibeli);
+        totalYangDibeli = totalPlusLiter + totalPlusPPN(totalPlusLiter);
+        cout << "Liter: " << literDibeli << " L" << endl;
+        cout << "Total plus liter: " << totalPlusLiter << endl;
+        cout << "Total di beli: " << totalYangDibeli << endl;
+        totalPenjualan += totalYangDibeli;
+        literTersedia -= literDibeli;
+    }
+    cout << "Total Penjualan Hari ini "<< totalPenjualan <<"\nLiter Tersedia sudah habis";
+}
