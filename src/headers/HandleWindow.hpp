@@ -11,7 +11,6 @@ using namespace std;
 class Window{
     public:
         GLFWwindow* window;
-        double number;
         ImGuiIO g_io;
         Window(int currentHeight, int currentWidth){
             this->height = currentHeight;
@@ -33,12 +32,16 @@ class Window{
 
         // Ui nya
         void kalkulatorWindow();
-        void handleButton(double& angka1, double& angka2);
-        double tambah(const double& angka1, const double& angka2);
-        double kurang(const double& angka1, const double& angka2);
-        double kali(const double& angka1, const double& angka2);
-        double bagi(const double& angka1, const double& angka2);
+        void handleButton(float& angka1, float& angka2);
+        float tambah(const float& angka1, const float& angka2);
+        float kurang(const float& angka1, const float& angka2);
+        float kali(const float& angka1, const float& angka2);
+        float bagi(const float& angka1, const float& angka2);
 
-        double hasil = 0;
+        float hasil = 0;
         string eksekusi = "";
+
+        // choice module
+        void choiceModule();
+        void handleChoice();
 };

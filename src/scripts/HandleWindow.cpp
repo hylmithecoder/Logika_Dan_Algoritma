@@ -70,17 +70,17 @@ void Window::Clean(){
 }
 
 void Window::kalkulatorWindow(){
-    static double number1 = 0; 
-    static double number2 = 0;
+    static float number1 = 0; 
+    static float number2 = 0;
     ImGui::Begin("Kalkulator window");
-    ImGui::InputDouble("Angka pertama: ", &number1);
-    ImGui::InputDouble("Angka kedua: ", &number2);
+    ImGui::InputFloat("Angka pertama: ", &number1);
+    ImGui::InputFloat("Angka kedua: ", &number2);
     ImGui::Separator();
     handleButton(number1, number2);
     ImGui::End();
 }
 
-void Window::handleButton(double& number1, double& number2){
+void Window::handleButton(float& number1, float& number2){
     if (ImGui::Button("Tambah")) {
         eksekusi = "Tambah";
         hasil = tambah(number1, number2);
@@ -98,26 +98,26 @@ void Window::handleButton(double& number1, double& number2){
     ImGui::Text("Hasil %s: %f", eksekusi.c_str(), hasil);
 }
 
-double Window::tambah(const double& angka1,const double& angka2){
-    double tambah = angka1 + angka2;
+float Window::tambah(const float& angka1,const float& angka2){
+    float tambah = angka1 + angka2;
     // ImGui::Text("Hasil penjumlahan: %f", tambah);
     return tambah;
 }
 
-double Window::kurang(const double& angka1,const double& angka2){
-    double tambah = angka1 - angka2;
+float Window::kurang(const float& angka1,const float& angka2){
+    float tambah = angka1 - angka2;
     // ImGui::Text("Hasil pengurangan: %f", tambah);
     return tambah;
 }
 
-double Window::kali(const double& angka1,const double& angka2){
-    double tambah = angka1 * angka2;
+float Window::kali(const float& angka1,const float& angka2){
+    float tambah = angka1 * angka2;
     // ImGui::Text("Hasil pengalian: %f", tambah);
     return tambah;
 }
 
-double Window::bagi(const double& angka1,const double& angka2){
-    double tambah = angka1 / angka2;
+float Window::bagi(const float& angka1,const float& angka2){
+    float tambah = angka1 / angka2;
     // ImGui::Text("Hasil pembagian: %f", tambah);
     return tambah;
 }
@@ -167,4 +167,15 @@ void Window::Main(){
     init();
     Update(g_io);
     Clean();
+}
+
+void Window::choiceModule(){
+    ImGui::Begin("Choice module");
+    ImGui::Text("Pilih Module yang mana ingin di buka");
+    
+    ImGui::End();
+}
+
+void Window::handleChoice(){
+
 }
