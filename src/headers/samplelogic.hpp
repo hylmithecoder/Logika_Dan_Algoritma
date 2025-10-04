@@ -180,7 +180,25 @@ class SampleLogic{
         
         // Pertemuan 5
         struct Pertemuan5{
+            // For
             void totalBilanganGenap();
+            void deretFibonacci();
+            void matrixIdentitas();
+            void menghitungFaktorial();
+
+            // while
+            void menghitungBilanganGanjil();
+            void menebakAngka();
+            void menghitungJumlahDigit();
+            void menampilkanBilanganPrima();
+            void convertToBinary();
+
+            // do while
+            void ratarataNilaiSiswa();
+            void mengvalidasiInput();
+            void menampilkanMenu();
+            void cetakDerekBilangan();
+            void tebakAngkaDoWhile();
         };
 
         struct LatihanPertemuan5
@@ -253,5 +271,5 @@ class SampleLogic{
                 return total;
             }
         };
-        
+        Pertemuan5 pertemuanke5;
 };

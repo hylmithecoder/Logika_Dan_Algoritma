@@ -372,6 +372,227 @@ void SampleLogic::Pertemuan5::totalBilanganGenap(){
     cout << "Total bilangan genap dari 1 hingga 50 adalah: " << total << endl;
 }
 
+void SampleLogic::Pertemuan5::deretFibonacci(){
+    cout << "Method deret fibonacci" << endl;
+    int n = 10; // Jumlah elemen Fibonacci yang ingin ditampilkan
+    int a = 0, b = 1, c;
+    cout << "Deret Fibonacci: " << a << " " << b << " ";
+    for (int i = 3; i <= n; i++) {
+        c = a + b;
+        cout << c << " ";
+        a = b;
+        b = c;
+    }
+    cout << endl;
+}
+
+void SampleLogic::Pertemuan5::matrixIdentitas(){
+    cout << "Method matrix identitas" << endl;
+    int n;
+    cout << "Masukkan ukuran matriks identitas: ";
+    cin >> n;
+
+    for (int i = 0; i < n; i++) {
+        for (int j = 0; j < n; j++) {
+            if (i == j)
+                cout << "1 ";
+            else
+                cout << "0 ";
+        }
+        cout << endl;
+    }
+
+}
+
+void SampleLogic::Pertemuan5::menghitungFaktorial(){
+    cout << "Method menghitung faktorial" << endl;
+    int angka, faktorial = 1;
+    cout << "Masukkan sebuah angka: ";
+    cin >> angka;
+    for (int i = 1; i <= angka; i++) {
+        faktorial *= i; // Mengalikan nilai faktorial dengan i
+    }
+    cout << "Faktorial dari " << angka << " adalah: " << faktorial << endl;
+}
+
+void SampleLogic::Pertemuan5::menghitungBilanganGanjil(){
+    cout << "Method menghitung bilangan ganjil" << endl;
+    int i = 1, total = 0;
+    while (i <= 50) {
+        total += i;
+        i += 2; // Menambah 2 untuk mendapatkan bilangan ganjil berikutnya
+    }
+    cout << "Total bilangan ganjil dari 1 hingga 50 adalah: " << total << endl;
+}
+
+void SampleLogic::Pertemuan5::menebakAngka(){
+    cout << "Method menebak angka" << endl;
+    int angka_rahasia = 7; // Angka rahasia
+    int tebak;
+
+    cout << "Tebak angka rahasia (antara 1 hingga 10): ";
+    cin >> tebak;
+    while (tebak != angka_rahasia) {
+        cout << "Salah! Coba lagi: ";
+        cin >> tebak;
+    }
+    cout << "Benar! Angka rahasia adalah: " << angka_rahasia << endl;
+}
+
+void SampleLogic::Pertemuan5::menghitungJumlahDigit(){
+    cout << "Method menghitung jumlah digit dalam sebuah angka" << endl;
+    int angka, jumlah_digit = 0;
+    cout << "Masukkan sebuah angka: ";
+    cin >> angka;
+    while (angka != 0) {
+        angka /= 10; // Menghapus digit terakhir
+        jumlah_digit++;
+    }
+    cout << "Jumlah digit dalam angka adalah: " << jumlah_digit << endl;
+}
+
+void SampleLogic::Pertemuan5::menampilkanBilanganPrima(){
+    cout << "Method menampilkan bilangan prima" << endl;
+    int i = 2;
+    while (i <= 100) {
+        bool prima = true;
+        for (int j = 2; j <= i / 2; j++) {
+            if (i % j == 0) {
+                prima = false;
+                break;
+            }
+        }
+        if (prima) {
+            cout << i << " ";
+        }
+        i++;
+    }
+    cout << endl;
+}
+
+void SampleLogic::Pertemuan5::ratarataNilaiSiswa(){
+    cout << "Method rata-rata nilai" << endl;
+    double nilai, total = 0;
+    int jumlah = 0;
+    char lanjut;
+    do {
+        cout << "Masukkan nilai mahasiswa (0-100): ";
+        cin >> nilai;
+        
+        // Validasi nilai yang diinput harus antara 0 hingga 100
+        if (nilai >= 0 && nilai <= 100) {
+            total += nilai;  // Menambahkan nilai ke total
+            jumlah++;        // Menambah jumlah mahasiswa
+        } else {
+            cout << "Nilai tidak valid, masukkan nilai antara 0 hingga 100!" << endl;
+        }
+        // Menanyakan apakah ingin memasukkan nilai lagi
+        cout << "Apakah ingin memasukkan nilai lagi? (y/t): ";
+        cin >> lanjut;
+
+    } while (lanjut == 'y' || lanjut == 'Y');  // Ulangi jika pengguna mengetik 'y'
+    if (jumlah > 0) {
+        double rataRata = total / jumlah;
+        cout << "Rata-rata nilai mahasiswa adalah: " << rataRata << endl;
+    } else {
+        cout << "Tidak ada nilai yang dimasukkan." << endl;
+    }
+}
+
+
+void SampleLogic::Pertemuan5::convertToBinary(){
+    cout << "Method convertToBinary" << endl;
+    int desimal, biner = 0, sisa, pangkat = 1;
+    cout << "Masukkan bilangan desimal: ";
+    cin >> desimal;
+    while (desimal > 0) {
+        sisa = desimal % 2;
+        biner += sisa * pangkat;
+        desimal /= 2;
+        pangkat *= 10;
+    }
+    cout << "Bilangan biner: " << biner << endl;
+}
+
+void SampleLogic::Pertemuan5::mengvalidasiInput(){
+    cout << "Method Validasi input pengguna" << endl;
+    int angka;
+    do {
+        cout << "Masukkan angka positif: ";
+        cin >> angka;
+
+        if (angka < 0) {
+            cout << "Angka tidak boleh negatif. Coba lagi!" << endl;
+        }
+    } while (angka < 0);  // Ulangi jika angka yang dimasukkan negatif
+    cout << "Angka positif yang dimasukkan adalah: " << angka << endl;
+}
+
+void SampleLogic::Pertemuan5::cetakDerekBilangan(){
+    cout << "Method cetak derek bilangan" << endl;
+    int n, i = 1;
+    cout << "Masukkan nilai n: ";
+    cin >> n;
+    cout << "Deret bilangan dari 1 hingga " << n << " adalah: ";
+    do {
+        cout << i << " ";
+        i++;
+    } while (i <= n);  // Ulangi hingga i lebih besar dari n
+    cout << endl;
+}
+
+void SampleLogic::Pertemuan5::tebakAngkaDoWhile(){
+    cout << "Method tebak angka do while" << endl;
+    int angka_rahasia = 42;  // Angka rahasia yang harus ditebak
+    int tebakan;
+    do {
+        cout << "Tebak angka antara 1 hingga 100: ";
+        cin >> tebakan;
+
+        if (tebakan > angka_rahasia) {
+            cout << "Terlalu tinggi! Coba lagi." << endl;
+        } else if (tebakan < angka_rahasia) {
+            cout << "Terlalu rendah! Coba lagi." << endl;
+        } else {
+            cout << "Selamat, tebakan Anda benar!" << endl;
+        }
+    } while (tebakan != angka_rahasia);  // Ulangi hingga tebakan benar
+
+}
+
+void SampleLogic::Pertemuan5::menampilkanMenu(){
+    cout << "Method menampilkan menu" << endl;
+    int pilihan;
+
+    do {
+        cout << "\n=== MENU PROGRAM ===" << endl;
+        cout << "1. Opsi 1" << endl;
+        cout << "2. Opsi 2" << endl;
+        cout << "3. Opsi 3" << endl;
+        cout << "4. Keluar" << endl;
+        cout << "Pilih menu (1-4): ";
+        cin >> pilihan;
+        switch (pilihan) {
+            case 1:
+                cout << "Anda memilih Opsi 1." << endl;
+                break;
+            case 2:
+                cout << "Anda memilih Opsi 2." << endl;
+                break;
+            case 3:
+                cout << "Anda memilih Opsi 3." << endl;
+                break;
+            case 4:
+                cout << "Keluar dari program." << endl;
+                break;
+            default:
+                cout << "Pilihan tidak valid. Silakan coba lagi!" << endl;
+                break;
+        }
+    } while (pilihan != 4);  // Ulangi hingga pengguna memilih
+
+}
+
 void SampleLogic::LatihanPertemuan5::Soal1(){
     cout << "Masukkan nilai IPK untuk 10 mahasiswa" << endl;
     totalIPK = jumlahIpk(jumlahSiswa);
@@ -386,9 +607,8 @@ void SampleLogic::LatihanPertemuan5::Soal2(){
     cin >> req;
     if (req == "iya"){
         Soal2IfVersion();
-    } else {
-        return;
     }
+    
     cout << "Masukkan jumlah liter yang tersedia untuk hari ini: ";
     cin >> literTersedia;
 

@@ -1,4 +1,5 @@
 #include <samplelogic.hpp>
+#include <HandleWindow.hpp>
 #include <algoritmabensin.hpp>
 
 void Update(){
@@ -133,6 +134,34 @@ void PertemuanKe4(){
     logic.menentukanGajiKaryawanDariJam();
 }
 
+void PertemuanKe5(){
+    SampleLogic logic;
+
+    // for
+    cout << "Studi kasus menggunakan for" << endl;
+    logic.pertemuanke5.totalBilanganGenap();
+    logic.drawStarTriangle();
+    logic.pertemuanke5.deretFibonacci();
+    logic.pertemuanke5.matrixIdentitas();
+    logic.pertemuanke5.menghitungFaktorial();
+
+    // while
+    cout << "Studi kasus menggunakan while" << endl;
+    logic.pertemuanke5.menghitungBilanganGanjil();
+    logic.pertemuanke5.menebakAngka();
+    logic.pertemuanke5.menghitungJumlahDigit();
+    logic.pertemuanke5.menampilkanBilanganPrima();
+    logic.pertemuanke5.convertToBinary();
+
+    // do while
+    cout << "Studi kasus menggunakan do while" << endl;
+    logic.pertemuanke5.ratarataNilaiSiswa();
+    logic.pertemuanke5.mengvalidasiInput();
+    logic.pertemuanke5.menampilkanMenu();
+    logic.pertemuanke5.cetakDerekBilangan();
+    logic.pertemuanke5.tebakAngkaDoWhile();
+}
+
 void LatihanPertemuanKe5Soal1(){
     SampleLogic::LatihanPertemuan5 logic;
     logic.Soal1();
@@ -200,18 +229,22 @@ void choiceModule(int request){
         break;
 
     case 5:
-        Soal1();
+        PertemuanKe5();
         break;
 
     case 6:
-        Soal2();
+        Soal1();
         break;
 
     case 7:
-        Soal3();
+        Soal2();
         break;
 
     case 8:
+        Soal3();
+        break;
+
+    case 9:
         loopPertemuanKe5(2);
         break;
 
@@ -226,28 +259,49 @@ void loopPertemuan(int pertemuan){
     }
 }
 
-void loopSoal(int jumlahSoal){
+void loopSoal(int jumlahPertemuan,int jumlahSoal){
     for (int i = 5; i <= jumlahSoal; ++i){
         cout << i << ". Soal " << i << endl;
     }
 }
 
 int setRequest(){
-    int jumlahPertemuan;
+    int jumlahPertemuan = 5;
     cout << "Pilih Materi atau soal yang ingin di pilih" << endl;
-    loopPertemuan(4);
-    loopSoal(7);
-    cout << "8. Latihan Pertemuan ke 5" << endl;
+    loopPertemuan(jumlahPertemuan);
+    loopSoal(jumlahPertemuan, 8);
+    cout << "9. Latihan Pertemuan ke 5" << endl;
     int request;
     cin >> request;
     return request;
 }
 
-int main(){
+void handleChoiceCliOrGui(){
+    int req, setReq;
+    Window win(1280, 720);
+    cout << "Pilih mode: \n"
+    "1. CLI\n"
+    "2. GUI";
+    cin >> req;
+    switch (req){
+        case 1:
+            setReq = setRequest();
+            choiceModule(setReq);
+            break;
+        
+        case 2:
+            win.Main();
+            break;
+
+    }
+}
+
+int main(int argv, char *argc[]){
 
     // choiceModule();
     // Update();
-    int setReq = setRequest();
-    choiceModule(setReq);
+    handleChoiceCliOrGui();
+    // int setReq = setRequest();
+    // choiceModule(setReq);
     return 0;
 }

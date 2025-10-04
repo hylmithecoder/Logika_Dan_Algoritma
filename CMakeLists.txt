@@ -2,15 +2,40 @@ cmake_minimum_required(VERSION 4.0)
 project(LogikaAndAlgoritma)
 
 set(SOURCE_CODE
-    src/main.cpp
-    src/samplelogic.cpp
-    src/samplelogic.hpp
-    src/algoritmabensin.cpp
-    src/algoritmabensin.hpp
+    src/scripts/main.cpp
+    src/scripts/samplelogic.cpp
+    src/headers/samplelogic.hpp
+    src/scripts/algoritmabensin.cpp
+    src/headers/algoritmabensin.hpp
+    src/scripts/HandleWindow.cpp
+    src/headers/HandleWindow.hpp
 )
+
+
+set(OpenGL_GL_PREFERENCE "GLVND")
+find_package(OpenGL REQUIRED)
 
 include_directories(
-    src/
+    src/headers
+    vendor/imgui
+    opengl32
+    glfw3
+    /usr/include/GLFW
 )
 
-add_executable(${PROJECT_NAME} ${SOURCE_CODE})
+link_libraries(
+    glfw
+    OpenGL::GL
+)
+
+set(Vendor
+    vendor/imgui/imgui.cpp
+    vendor/imgui/imgui_demo.cpp
+    vendor/imgui/imgui_draw.cpp
+    vendor/imgui/imgui_tables.cpp
+    vendor/imgui/imgui_widgets.cpp
+    vendor/imgui/backends/imgui_impl_glfw.cpp
+    vendor/imgui/backends/imgui_impl_opengl3.cpp
+)
+
+add_executable(${PROJECT_NAME} ${SOURCE_CODE} ${Vendor})
