@@ -1,6 +1,8 @@
 cmake_minimum_required(VERSION 4.0)
 project(LogikaAndAlgoritma)
 
+set(CMAKE_CXX_STANDARD 26)
+
 set(SOURCE_CODE
     src/scripts/main.cpp
     src/scripts/samplelogic.cpp
@@ -14,6 +16,8 @@ set(SOURCE_CODE
 
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
+find_package(PkgConfig REQUIRED)
+pkg_check_modules(MUPDF REQUIRED mupdf)
 
 include_directories(
     src/headers
@@ -26,6 +30,12 @@ include_directories(
 link_libraries(
     glfw
     OpenGL::GL
+    mupdf
+    freetype
+    harfbuzz
+    jpeg
+    jbig2dec
+    z
 )
 
 set(Vendor

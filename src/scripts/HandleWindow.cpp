@@ -1,7 +1,202 @@
 #include <HandleWindow.hpp>
 
 void Window::error_callback(int error, const char* description) {
-    fprintf(stderr, "Error: %s\n", description);
+    cerr << "Error: " << description << endl;
+}
+
+int Window::getPagePDF(const char* filePath){
+    // Cek apakah file ada
+    FILE* testFile = fopen(filePath, "rb");
+    if (!testFile) {
+        cerr << "File tidak ditemukan: " << filePath << endl;
+        return 0;
+    }
+
+    fclose(testFile);
+    doc = fz_open_document(ctx, filePath);
+        
+        if (!doc) {
+            cerr << "Dokumen NULL setelah fz_open_document" << endl;
+            fz_throw(ctx, FZ_ERROR_GENERIC, "Failed to open document");
+        }
+        
+        // Cek apakah dokumen perlu password
+        if (fz_needs_password(ctx, doc)) {
+            cerr << "PDF memerlukan password" << endl;
+            fz_drop_document(ctx, doc);
+            doc = nullptr;
+        }
+        
+    // Dapatkan jumlah halaman
+    totalPages = fz_count_pages(ctx, doc);
+    return totalPages;
+}
+
+vector<GLuint> Window::readPDFFile(const char* filePath) {
+    cleanup();
+    vector<GLuint> allTexturePages;
+    
+    // Cek apakah file ada
+    FILE* testFile = fopen(filePath, "rb");
+    if (!testFile) {
+        cerr << "File tidak ditemukan: " << filePath << endl;
+        return vector<GLuint>();
+    }
+    fclose(testFile);
+    
+    cout <<"Mencoba membuka PDF: " << filePath << endl;
+    
+    fz_try(ctx) {
+        // Buka dokumen PDF dengan error handling yang lebih baik
+        doc = fz_open_document(ctx, filePath);
+        
+        if (!doc) {
+            cerr << "Dokumen NULL setelah fz_open_document" << endl;
+            fz_throw(ctx, FZ_ERROR_GENERIC, "Failed to open document");
+        }
+        
+        // Cek apakah dokumen perlu password
+        if (fz_needs_password(ctx, doc)) {
+            cerr << "PDF memerlukan password" << endl;
+            fz_drop_document(ctx, doc);
+            doc = nullptr;
+            return vector<GLuint>();
+        }
+        
+        // Dapatkan jumlah halaman
+        totalPages = fz_count_pages(ctx, doc);
+        praktikum6.totalPages = totalPages;
+        cout <<"Total halaman: " << totalPages << endl;
+        
+        if (totalPages <= 0) {
+            cerr << "PDF tidak memiliki halaman" << endl;
+            fz_drop_document(ctx, doc);
+            doc = nullptr;
+            return vector<GLuint>();
+        }
+        
+        // Render semua halaman ke texture
+        for (int i = 0; i < totalPages; i++) {
+            cout <<"Rendering halaman" << i + 1 << "..." << endl;
+            
+            fz_page* page = fz_load_page(ctx, doc, i);
+            
+            // Dapatkan bound halaman
+            fz_rect bounds = fz_bound_page(ctx, page);
+            
+            // Buat matrix untuk scaling (zoom)
+            fz_matrix transform = fz_scale(2.0f, 2.0f); // 2x zoom
+            bounds = fz_transform_rect(bounds, transform);
+            
+            // Render halaman ke pixmap
+            fz_pixmap* pix = fz_new_pixmap_from_page(
+                ctx, page, transform, 
+                fz_device_rgb(ctx), 0
+            );
+            
+            if (!pix) {
+                cerr << "Gagal membuat pixmap untuk halaman " << i << endl;
+                fz_drop_page(ctx, page);
+                continue;
+            }
+            
+            // Konversi ke texture OpenGL
+            GLuint texture = createTextureFromPixmap(pix);
+            cout << "Texture: " << texture << endl;
+            allTexturePages.push_back(texture);
+            // praktikum6.currentPageTextures = pageTextures;
+            // cout << "PageTextures size: " << praktikum6.currentPageTextures.size() << endl;
+            // Bersihkan
+            fz_drop_pixmap(ctx, pix);
+            fz_drop_page(ctx, page);
+        }
+        
+        pdfLoaded = true;
+        cout <<"PDF berhasil dimuat: " << totalPages << "halaman" << endl;
+        return allTexturePages;
+    }
+    fz_catch(ctx) {
+        const char* errMsg = fz_caught_message(ctx);
+        cerr << "Gagal membuka PDF: " << errMsg  << endl;
+        
+        if (doc) {
+            fz_drop_document(ctx, doc);
+            doc = nullptr;
+        }
+        pdfLoaded = false;
+    }
+}
+
+void Window::renderPDF(const vector<GLuint>& currentPageTextures, int& currentPage, const int& totalPages) {
+    if (currentPageTextures.empty()) {
+        ImGui::Text("Tidak ada PDF yang dimuat");
+        return;
+    }
+    
+    if (currentPage >= totalPages) {
+        currentPage = 0;
+    }
+    
+    ImGui::Text("Halaman %d dari %d", currentPage + 1, totalPages);
+    
+    if (ImGui::Button("< Sebelumnya") && currentPage > 0) {
+        currentPage--;
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Selanjutnya >") && currentPage < totalPages - 1) {
+        currentPage++;
+    }
+    
+    ImGui::Separator();
+    
+
+    if (currentPageTextures.empty()) {
+        cout << "Tidak ada textures yang dimuat" << endl;
+        return;
+    }
+    if (currentPage >= currentPageTextures.size()) {
+        cout << "Index halaman tidak valid: " << currentPage << " (total: " << currentPageTextures.size() << ")" << endl;
+        return;
+    }
+
+    GLuint currentTexture = currentPageTextures[currentPage];
+    
+    // Dapatkan ukuran texture
+    int w, h;
+    glBindTexture(GL_TEXTURE_2D, currentTexture);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+    
+    // Tampilkan sebagai image di ImGui
+    ImVec2 size = ImGui::GetContentRegionAvail();
+    float scale = std::min(size.x / w, size.y / h);
+    
+    ImGui::Image((ImTextureID)(intptr_t)currentTexture, 
+                 ImVec2(w * scale, h * scale));
+}
+
+void Window::initMuPDF() {
+    if (ctx) return; // Sudah diinit
+    
+    // Alokasi memory untuk context dengan ukuran yang cukup
+    ctx = fz_new_context(NULL, NULL, 256 << 20); // 256 MB
+    if (!ctx) {
+        cerr << "ERROR: Cannot create MuPDF context" << endl;
+        return;
+    }
+    
+    cout <<"✓ MuPDF context created successfully " << endl;
+    
+    // Register document handlers
+    fz_try(ctx) {
+        fz_register_document_handlers(ctx);
+        cout <<"✓ MuPDF document handlers registered" << endl;
+    }
+    fz_catch(ctx) {
+        cerr << "ERROR: Cannot register document handlers: " <<  fz_caught_message(ctx) << endl;
+        fz_drop_context(ctx);
+        ctx = nullptr;
+    }
 }
 
 void Window::init(){
@@ -16,8 +211,17 @@ void Window::init(){
 
     // float main_scale = ImGui_ImplGlfw_GetContentScaleForMonitor(glfwGetPrimaryMonitor()); // Valid on GLFW 3.3+ only
     window = glfwCreateWindow(width, height, "Logika Dan Algoritma", NULL, NULL);
+    // Setelah membuat jendela dengan window = glfwCreateWindow(width, height, "Logika Dan Algoritma", NULL, NULL);
+    int screenWidth, screenHeight;
+    glfwGetWindowSize(window, &screenWidth, &screenHeight);
+    int windowWidth = width;
+    int windowHeight = height;
+    int xPos = (screenWidth - windowWidth) / 2;
+    int yPos = (screenHeight - windowHeight) / 2;
+
+    glfwSetWindowPos(window, xPos, yPos);
     if (!window) {
-        fprintf(stderr, "Failed to create GLFW window\n");
+        cerr << "Failed to create GLFW window" << endl;
         glfwTerminate(); // Terminate GLFW if window creation fails
         return;
     }
@@ -37,12 +241,10 @@ void Window::init(){
     io.ConfigFlags |= ImGuiConfigFlags_NavEnableGamepad;      // Enable Gamepad Controls
     io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;         // Enable Docking
     io.ConfigFlags |= ImGuiConfigFlags_ViewportsEnable;       // Enable Multi-Viewport / Platform Windows
-
+    io.ConfigFlags |= ImGuiConfigFlags_DockingEnable;
     ImGui::StyleColorsDark();
 
     ImGuiStyle& style = ImGui::GetStyle();
-    // style.ScaleAllSizes(main_scale);
-    // style.FontScaleDpi = main_scale;   
 
     g_io = io;
 
@@ -57,10 +259,17 @@ void Window::init(){
     ImGui_ImplGlfw_InitForOpenGL(window, true);
     ImGui_ImplOpenGL3_Init(glsl_version);
 
-
+    initMuPDF();
+    praktikum2.totalPages = getPagePDF(filePaths[0]);
+    praktikum2.currentPageTextures = readPDFFile(filePaths[0]);
+    praktikum4.totalPages = getPagePDF(filePaths[1]);
+    praktikum4.currentPageTextures = readPDFFile(filePaths[1]);
+    praktikum6.totalPages = getPagePDF(filePaths[2]);
+    praktikum6.currentPageTextures = readPDFFile(filePaths[2]);
 }
 
 void Window::Clean(){
+    cleanup();
     ImGui_ImplOpenGL3_Shutdown();
     ImGui_ImplGlfw_Shutdown();
     ImGui::DestroyContext();
@@ -73,8 +282,8 @@ void Window::kalkulatorWindow(){
     static float number1 = 0; 
     static float number2 = 0;
     ImGui::Begin("Kalkulator window");
-    ImGui::InputFloat("Angka pertama: ", &number1);
-    ImGui::InputFloat("Angka kedua: ", &number2);
+    ImGui::InputFloat("Angka pertama", &number1);
+    ImGui::InputFloat("Angka kedua", &number2);
     ImGui::Separator();
     handleButton(number1, number2);
     ImGui::End();
@@ -94,7 +303,7 @@ void Window::handleButton(float& number1, float& number2){
         eksekusi = "Bagi";
         hasil = bagi(number1, number2);
     }
-    cout << "Hasil: " << hasil << endl;
+    // cout << "Hasil: " << hasil << endl;
     ImGui::Text("Hasil %s: %f", eksekusi.c_str(), hasil);
 }
 
@@ -137,8 +346,27 @@ void Window::Update(ImGuiIO& io){
         ImGui_ImplGlfw_NewFrame();
         ImGui::NewFrame();
 
-        kalkulatorWindow();
+        ImGuiWindowFlags window_flags = ImGuiWindowFlags_NoTitleBar | ImGuiWindowFlags_NoCollapse | ImGuiWindowFlags_NoResize | ImGuiWindowFlags_NoMove | ImGuiWindowFlags_NoBringToFrontOnFocus | ImGuiWindowFlags_NoNavFocus | ImGuiWindowFlags_MenuBar | ImGuiWindowFlags_NoDocking;
 
+        // Main Dockspace
+        ImGuiViewport* viewport = ImGui::GetMainViewport();
+        ImGui::SetNextWindowPos(viewport->Pos);
+        ImGui::SetNextWindowSize(viewport->Size);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowRounding, 0.0f);
+        ImGui::PushStyleVar(ImGuiStyleVar_WindowBorderSize, 0.0f);
+        
+        ImGui::Begin("DockSpace", nullptr, window_flags);
+        ImGui::PopStyleVar(2);
+        ImGuiID dockspace_id = ImGui::GetID("MyDockSpace");
+        // #ifdef ImGuiConfigFlags_DockingEnable
+        ImGui::DockSpace(dockspace_id, ImVec2(0.0f, 0.0f), ImGuiDockNodeFlags_None);
+
+        kalkulatorWindow();
+        praktikum6.uipertemuan6();
+        praktikum2.uipertemuan2();
+        praktikum4.uipertemuan4();
+
+        ImGui::End();
         // Render
         ImGui::Render();
         int display_w, display_h;
@@ -169,13 +397,181 @@ void Window::Main(){
     Clean();
 }
 
+void Window::cleanup() {
+    // Hapus semua texture
+    for (GLuint tex : pageTextures) {
+        glDeleteTextures(1, &tex);
+    }
+    pageTextures.clear();
+    
+    // Tutup dokumen
+    if (doc) {
+        fz_drop_document(ctx, doc);
+        doc = nullptr;
+    }
+    
+    // Reset semua state
+    // pdfLoaded = false;
+    totalPages = 0;
+}
+
+void Window::pertemuan6::renderPDF() {
+    if (currentPageTextures.empty()) {
+        ImGui::Text("Tidak ada PDF yang dimuat");
+        return;
+    }
+    
+    if (currentPage >= totalPages) {
+        currentPage = 0;
+    }
+    
+    ImGui::Text("Halaman %d dari %d", currentPage + 1, totalPages);
+    
+    if (ImGui::Button("< Sebelumnya") && currentPage > 0) {
+        currentPage--;
+    }
+    ImGui::SameLine();
+    if (ImGui::Button("Selanjutnya >") && currentPage < totalPages - 1) {
+        currentPage++;
+    }
+    
+    ImGui::Separator();
+    
+
+    if (currentPageTextures.empty()) {
+        cout << "Tidak ada textures yang dimuat" << endl;
+        return;
+    }
+    if (currentPage >= currentPageTextures.size()) {
+        cout << "Index halaman tidak valid: " << currentPage << " (total: " << currentPageTextures.size() << ")" << endl;
+        return;
+    }
+
+    GLuint currentTexture = currentPageTextures[currentPage];
+    
+    // Dapatkan ukuran texture
+    int w, h;
+    glBindTexture(GL_TEXTURE_2D, currentTexture);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_WIDTH, &w);
+    glGetTexLevelParameteriv(GL_TEXTURE_2D, 0, GL_TEXTURE_HEIGHT, &h);
+    
+    // Tampilkan sebagai image di ImGui
+    ImVec2 size = ImGui::GetContentRegionAvail();
+    float scale = std::min(size.x / w, size.y / h);
+    
+    ImGui::Image((ImTextureID)(intptr_t)currentTexture, 
+                 ImVec2(w * scale, h * scale));
+}
+
+GLuint Window::createTextureFromPixmap(fz_pixmap* pix) {
+    GLuint texture;
+    glGenTextures(1, &texture);
+    glBindTexture(GL_TEXTURE_2D, texture);
+    
+    // Set texture parameters
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MIN_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_MAG_FILTER, GL_LINEAR);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_S, GL_CLAMP_TO_EDGE);
+    glTexParameteri(GL_TEXTURE_2D, GL_TEXTURE_WRAP_T, GL_CLAMP_TO_EDGE);
+    
+    // Upload texture data
+    int w = fz_pixmap_width(ctx, pix);
+    int h = fz_pixmap_height(ctx, pix);
+    unsigned char* samples = fz_pixmap_samples(ctx, pix);
+    
+    glTexImage2D(GL_TEXTURE_2D, 0, GL_RGB, w, h, 0, 
+                 GL_RGB, GL_UNSIGNED_BYTE, samples);
+    
+    return texture;
+}
+
 void Window::choiceModule(){
     ImGui::Begin("Choice module");
     ImGui::Text("Pilih Module yang mana ingin di buka");
-    
     ImGui::End();
 }
 
-void Window::handleChoice(){
+void Window::pertemuan6::uipertemuan6(){
+    Window* parent = (Window*)this;
+    ImGui::Begin("Pertemuan 6");
+    ImGui::Text("Pertemuan 6 FUNGSI DAN MODULARISASI PROGRAM DENGAN C++");
+    ImGui::Text("PDF Nya");
+    parent->renderPDF(currentPageTextures, currentPage, totalPages);
+    ImGui::Separator();
+    A_soal1();
+    A_soal2();
+    A_soal3();
+    B_soal3();
+    C_soal2();
+    ImGui::End();
+}
 
+void Window::pertemuan6::A_soal1(){
+    ImGui::Separator();
+    ImGui::Text("Studi kasus A 1");
+    int penjumlahan = tambah(10, 20);
+    ImGui::Text("Hasil penjumlahan: %d", penjumlahan);
+}
+
+void Window::pertemuan6::A_soal2(){
+    ImGui::Separator();
+    ImGui::Text("Studi kasus A 2");
+    tampilkanPesan();
+}
+
+void Window::pertemuan6::A_soal3(){
+    static float panjang = 0, lebar = 0;
+    static bool onClick = false;
+    ImGui::Separator();
+    ImGui::Text("Studi kasus A 3\nMasukkan Panjang");
+    ImGui::InputFloat("Panjang", &panjang);
+    ImGui::Text("Masukkan Lebar");
+    ImGui::InputFloat("Lebar", &lebar);
+    if (ImGui::Button("Hitung")) {        
+        onClick = true;        
+    }
+    if (onClick){
+        float luas = luasPersegiPanjang(panjang, lebar);
+        ImGui::Text("Hasil: %f", luas);
+    }
+}
+
+void Window::pertemuan6::B_soal3(){
+    static char input[256] = "";
+    ImGui::Separator();
+    ImGui::Text("Studi kasus B 3\nMasukkan teks");
+    ImGui::InputText("Teks", input, IM_ARRAYSIZE(input));
+    ImGui::Text("Panjang teks: %d", panjangString(input));
+}
+
+void Window::pertemuan6::C_soal2(){
+    static int current_item_index = 0; // Stores the index of the currently selected item
+    const char* choice[] = { "Persegi", "Persegi Panjang", "Lingkaran" }; // Array of options
+
+    ImGui::Separator();
+    ImGui::Text("Studi kasus C 2 mencari luas bangun datar\nMasukkan Panjang");
+    ImGui::Combo("Pilih Bangun Datar", &current_item_index, choice, IM_ARRAYSIZE(choice));
+    if (current_item_index == 0){
+        uiForPersegi();
+    } else if (current_item_index == 1){
+        uiForPersegiPanjang();
+    } else if (current_item_index == 2){
+        uiForLingkaran();
+    }
+}
+
+void Window::pertemuan2::uipertemuan2(){
+    Window* parent = (Window*)this;
+    ImGui::Begin("Pertemuan 2");
+    ImGui::Text("Pertemuan 2 Logika matematika dalam c++");
+    parent->renderPDF(currentPageTextures, currentPage, totalPages);
+    ImGui::End();
+}
+
+void Window::pertemuan4::uipertemuan4(){
+    Window* parent = (Window*)this;
+    ImGui::Begin("Pertemuan 4");
+    ImGui::Text("Pertemuan 4 Percabangan dalam pemrograman");
+    parent->renderPDF(currentPageTextures, currentPage, totalPages);
+    ImGui::End();
 }
