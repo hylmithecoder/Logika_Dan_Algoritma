@@ -69,6 +69,36 @@ class Window{
         struct pertemuan6 {
             vector<GLuint> currentPageTextures;
             void uipertemuan6();
+            void handleStudyKasus(int currentStudyKasus){
+                switch (currentStudyKasus) {
+                    case 0 :
+                        A_soal1();
+                        A_soal2();
+                        A_soal3();
+                        A_soal4();
+                        A_soal5();
+                        break;
+                    
+                    case 1:
+                        B_soal1();
+                        B_soal2();
+                        B_soal3();
+                        B_soal4();
+                        B_soal5();
+                        break;
+                    
+                    case 2:
+                        C_soal1();
+                        C_soal2();
+                        C_soal3();
+                        C_soal4();
+                        C_soal5();
+                        break;
+
+                    default:
+                        break;
+                }
+            }
             void A_soal1();
             int tambah(int a, int b){
                 return a + b;
@@ -96,26 +126,153 @@ class Window{
 
             void A_soal2();
             void A_soal3();
+            void A_soal4();
+
+            int faktorial(int n){
+                if (n == 0) return 1;
+                return n * faktorial(n - 1);
+            }
+
+            void A_soal5();
+
+            void cetakGenap(int n){
+                static char output[256] = "";
+                int offset = 0;
+                output[0] = '\0';
+                for (int i = 2; i <= n; i += 2){
+                    int chars_written = snprintf(output + offset, sizeof(output) - offset, "%d ", i);
+                    if (chars_written > 0 && (offset + chars_written) < sizeof(output)) {
+                        offset += chars_written;
+                    } else {
+                        break;
+                    }
+                }
+                ImGui::InputTextMultiline("##MyMultilineText", output, sizeof(output), ImVec2(-FLT_MIN, 0.0f));
+            }
+
+            void B_soal1();
+
+            int kuadrat(int n){
+                return n * n;
+            }
+
+            void B_soal2();
+
+            float hitungRataRata(float  a, float b, float c){
+                return (a + b + c) / 3;
+            }
+
             void B_soal3();
+
+            void B_soal4();
+
+            int tukarNilai(int& a, int& b){
+                a = b;
+                return a;
+            }
+
+            void B_soal5();
+
+            int maximum(int a, int b){
+                return (a > b) ? a : b;
+            }
+
+            float hasilKalkulator = 0;
+            void C_soal1();
             void C_soal2();
+            void C_soal3();
+            vector<string> handleButtonCSoal3(vector<string> currentSiswa, string& currentName){
+                if (ImGui::Button("Tambah Siswa")){
+                    currentSiswa.push_back(currentName);
+                }
+                if (currentSiswa.size() == 0){
+                        ImGui::Text("Daftar siswa masih kosong");
+                } else {
+                    if (ImGui::Button("Hapus Siswa")){
+                            currentSiswa.pop_back();
+                    }                    
+                }
+                return currentSiswa;
+            };
+            
+            void HandleCariSiswa(char* searchName, vector<string>& siswa, bool& isFound){
+                ImGui::Text("Cari siswa:");
+                ImGui::SameLine();
+                ImGui::InputText("##Teksc_3_2", searchName, IM_ARRAYSIZE(searchName));
+                ImGui::SameLine();
+                if (ImGui::Button("Cari")){
+                    isFound = false;
+                    cout << "Search name: " << searchName << endl;
+                    for (const string& name : siswa){
+                        if (name == searchName){
+                            cout << "Siswa ditemukan: " << name << endl;
+                            isFound = true;
+                            break;
+                        }
+                    }
+                    if (!isFound){
+                        ImGui::Text("Siswa tidak ditemukan");
+                    }
+                }
+                if (isFound){
+                    ImGui::Text("Siswa ditemukan: %s", searchName);
+                }
+            }
+
+            void C_soal4();
+
+            float hitungNilaiAkhir(float nilaiTugas, float nilaiUjian){
+                return (nilaiTugas * 0.4) + (nilaiUjian * 0.6);
+            }
+
+            void tampilkanNilai(float nilai){
+                ImGui::Text("Nilai akhir: %f", nilai);
+                if (nilai >= 75) {
+                    ImGui::Text("Selamat, Anda lulus!");
+                } else {
+                    ImGui::Text("Maaf, Anda tidak lulus!");
+                }
+            }
+
+            void C_soal5();
+
+            void showHarga(int pilihan, int jumlah, string namaMakanan = ""){
+                float harga = setHarga(pilihan, jumlah);
+                ImGui::Text("Makanan yang dipilih: %s", namaMakanan.c_str()); 
+                ImGui::Text("Harga: $%f", harga);
+            }
+
+            float setHarga(int pilihan, int jumlah){
+                switch (pilihan){
+                    case 0:
+                        return 10 * jumlah;
+                    case 1:
+                        return 8 * jumlah;
+                    case 2:
+                        return 12 * jumlah;
+                    default:
+                        return 0;
+                }
+            }
+
             void uiForPersegi(){
                 static float panjang = 0;
                 ImGui::Text("Masukkan Panjang");
-                ImGui::InputFloat("Panjang Sisi", &panjang);
+                ImGui::InputFloat("##PanjangSisi", &panjang);
                 ImGui::Text("%f x %f = %f", panjang, panjang, luasPersegi(panjang));
             };
             void uiForPersegiPanjang(){
                 static float panjang = 0, lebar = 0;
                 ImGui::Text("Masukkan Panjang");
-                ImGui::InputFloat("Panjang Sisi", &panjang);
+                ImGui::InputFloat("##Panjang Sisi", &panjang);
                 ImGui::Text("Masukkan Lebar");
-                ImGui::InputFloat("Lebar", &lebar);
+                ImGui::InputFloat("##Lebar", &lebar);
                 ImGui::Text("%f x %f = %f", panjang, lebar, luasPersegiPanjang(panjang, lebar));
             };
             void uiForLingkaran(){
                 static float jari = 0;
                 ImGui::Text("Masukkan jari-jari");
-                ImGui::InputFloat("Jari-Jari", &jari);
+                ImGui::InputFloat("##Jari-Jari", &jari);
                 ImGui::Text("3.14 x %f x %f = %f", jari, jari, luasLingkaran(jari));
             };
 
