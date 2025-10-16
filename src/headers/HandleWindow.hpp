@@ -53,6 +53,8 @@ class Window{
             int currentPage = 0;
             int totalPages;
             void uipertemuan2();
+            void soal1();
+            void soal2();
             void renderPDF();
         };
         pertemuan2 praktikum2;
@@ -285,6 +287,76 @@ class Window{
         };
 
         pertemuan6 praktikum6;
+
+        struct TableDataSekolah {
+
+            struct baseDataSiswa {
+                string namasiswa;
+                int NIS;
+                string NamaIbu;
+                int NIKIbu;
+            };
+
+            struct TKTable {
+                baseDataSiswa dataSiswa[100];
+            };
+
+            struct SDTable {
+                baseDataSiswa dataSiswa[100];
+                string asalTK;
+            };
+
+            struct SMPTable {
+                baseDataSiswa dataSiswa[100];
+                string asalTK;
+                string asalSD;
+                int noIjazahSD;
+            };
+
+            struct SMATable {
+                baseDataSiswa dataSiswa[100];
+                string asalTK;
+                string asalSD;
+                int noIjazahSD;
+                string asalSMP;
+                int noIjazahSMP;
+            };
+
+            void uidataSekolah();
+            void submitToTKTable(string& namasiswa, string& namaIbu, int& NIS, int& NIKIbu);
+            void submitToSDTable(string& namasiswa, string& namaIbu, int& NIS, int& NIKIbu, string& asalTK); 
+            void submitToSMPTable(string& namasiswa, string& namaIbu, int& NIS, int& NIKIbu, string& asalTK, string& asalSd, int& noIjazahSD);
+            void submitToSMATable(string& namasiswa, string& namaIbu, int& NIS, int& NIKIbu, string& asalTK, string& asalSd, int& noIjazahSD, string& asalSMP, int& noIjazahSmp);
+           
+            void showTableTK(TKTable tableData[]);
+            void showTableSD(SDTable tableData[]);
+            void showTableSMP(SMPTable tableData[]);
+            void showTableSMA(SMATable tableData[]);
+            int currentBarisTk = 0;
+            int currentBarisSd = 0;
+            int currentBarisSmp = 0;
+            int currentBarisSma = 0;
+            TKTable tableDataTK[100];
+            SDTable tableDataSD[100];
+            SMPTable tableDataSMP[100];
+            SMATable tableDataSMA[100];
+
+            void uiTypeTk();
+            void uiTypeSd();
+            void uiTypeSmp();
+            void uiTypeSma();
+            void deleteDataSiswaTypeTk(TKTable tableData[], int& currentBarisTk);
+            void deleteDataSiswaTypeSd(SDTable tableData[], int& currentBarisSd);
+            void deleteDataSiswaTypeSmp(SMPTable tableData[], int& currentBarisSmp);
+            void deleteDataSiswaTypeSma(SMATable tableData[], int& currentBarisSma);
+            void editDataSiswaTypeTk(TKTable tableData[], int& currentBarisTk);
+            void editDataSiswaTypeSd(SDTable tableData[], int& currentBarisSd);
+            void editDataSiswaTypeSmp(SMPTable tableData[], int& currentBarisSmp);
+            void editDataSiswaTypeSma(SMATable tableData[], int& currentBarisSma);
+        };
+
+        TableDataSekolah dataSekolah;
+
         vector<GLuint> pageTextures;
 
     private:

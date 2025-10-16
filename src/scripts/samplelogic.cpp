@@ -635,3 +635,42 @@ void SampleLogic::LatihanPertemuan5::Soal2IfVersion(){
     string req;
     Soal2UpdateHandler(req);
 }
+
+void SampleLogic::Pertemuan7::tableArray2Dimensi(){
+    cout << "Method array2Dimensi" << endl;
+    int arr[2][3] = {{1, 2, 3}, {4, 5, 6}};
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 3; j++) {
+            cout << arr[i][j] << " ";
+        }
+        cout << endl;
+    }
+}
+
+void SampleLogic::Pertemuan7::tableArray3Dimensi(){
+    cout << "Method array3dimensi" << endl;
+    int arr[2][2][3] = {
+        {
+            {1, 2, 3},
+            {4, 5, 6}
+        },
+        {
+            {7, 8, 9},
+            {10, 11, 12}
+        }
+    };
+
+    // Menampilkan elemen-elemen array
+    cout << "Elemen-elemen dalam array tiga dimensi:" << endl;
+    for (int i = 0; i < 2; i++) {
+        for (int j = 0; j < 2; j++) {
+            for (int k = 0; k < 3; k++) {
+                cout << "Lapisan " << i << ", Baris " << j << ", Kolom " << k << ": " << arr[i][j][k] << endl;
+            }
+        }
+    }
+
+    // Akses elemen tertentu
+    cout << "Elemen pada Lapisan 1, Baris 0, Kolom 2: " << arr[1][0][2] << endl;  // Output: 9
+
+}

@@ -272,4 +272,11 @@ class SampleLogic{
             }
         };
         Pertemuan5 pertemuanke5;
+
+        struct Pertemuan7 {
+            void tableArray2Dimensi();
+            void tableArray3Dimensi();
+        };
+
+        Pertemuan7 pertemuanke7;
 };

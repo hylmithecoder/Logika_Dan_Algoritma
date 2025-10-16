@@ -162,6 +162,12 @@ void PertemuanKe5(){
     logic.pertemuanke5.tebakAngkaDoWhile();
 }
 
+void PertemuanKe7(){
+    SampleLogic logic;
+    logic.pertemuanke7.tableArray2Dimensi();
+    logic.pertemuanke7.tableArray3Dimensi();
+}
+
 void LatihanPertemuanKe5Soal1(){
     SampleLogic::LatihanPertemuan5 logic;
     logic.Soal1();
@@ -233,18 +239,22 @@ void choiceModule(int request){
         break;
 
     case 6:
-        Soal1();
+        PertemuanKe7();
         break;
 
     case 7:
-        Soal2();
+        Soal1();
         break;
 
     case 8:
-        Soal3();
+        Soal2();
         break;
 
     case 9:
+        Soal3();
+        break;
+
+    case 10:
         loopPertemuanKe5(2);
         break;
 
@@ -260,13 +270,13 @@ void loopPertemuan(int pertemuan){
 }
 
 void loopSoal(int jumlahPertemuan,int jumlahSoal){
-    for (int i = 5; i <= jumlahSoal; ++i){
+    for (int i = 7; i <= jumlahSoal; ++i){
         cout << i << ". Soal " << i << endl;
     }
 }
 
 int setRequest(){
-    int jumlahPertemuan = 5;
+    int jumlahPertemuan = 6;
     cout << "Pilih Materi atau soal yang ingin di pilih" << endl;
     loopPertemuan(jumlahPertemuan);
     loopSoal(jumlahPertemuan, 8);
