@@ -366,6 +366,7 @@ void Window::Update(ImGuiIO& io){
         praktikum4.uipertemuan4();
         praktikum6.uipertemuan6();
         dataSekolah.uidataSekolah();
+        praktikum7.ui();
 
         ImGui::End();
         // Render

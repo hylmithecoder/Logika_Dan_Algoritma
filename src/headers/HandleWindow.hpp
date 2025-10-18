@@ -9,6 +9,7 @@
 #include <vector>
 #include "imgui.h"
 using namespace std;
+using namespace ImGui;
 
 class Window{
     public:
@@ -107,7 +108,7 @@ class Window{
             }
 
             void tampilkanPesan() {
-                ImGui::Text("Selamat datang di kursus Logika dan Algoritma!");
+                Text("Selamat datang di kursus Logika dan Algoritma!");
             }
 
             float luasPersegiPanjang(float panjang, float lebar) {
@@ -149,7 +150,7 @@ class Window{
                         break;
                     }
                 }
-                ImGui::InputTextMultiline("##MyMultilineText", output, sizeof(output), ImVec2(-FLT_MIN, 0.0f));
+                InputTextMultiline("##MyMultilineText", output, sizeof(output), ImVec2(-FLT_MIN, 0.0f));
             }
 
             void B_soal1();
@@ -184,13 +185,13 @@ class Window{
             void C_soal2();
             void C_soal3();
             vector<string> handleButtonCSoal3(vector<string> currentSiswa, string& currentName){
-                if (ImGui::Button("Tambah Siswa")){
+                if (Button("Tambah Siswa")){
                     currentSiswa.push_back(currentName);
                 }
                 if (currentSiswa.size() == 0){
-                        ImGui::Text("Daftar siswa masih kosong");
+                        Text("Daftar siswa masih kosong");
                 } else {
-                    if (ImGui::Button("Hapus Siswa")){
+                    if (Button("Hapus Siswa")){
                             currentSiswa.pop_back();
                     }                    
                 }
@@ -198,11 +199,11 @@ class Window{
             };
             
             void HandleCariSiswa(char* searchName, vector<string>& siswa, bool& isFound){
-                ImGui::Text("Cari siswa:");
-                ImGui::SameLine();
-                ImGui::InputText("##Teksc_3_2", searchName, IM_ARRAYSIZE(searchName));
-                ImGui::SameLine();
-                if (ImGui::Button("Cari")){
+                Text("Cari siswa:");
+                SameLine();
+                InputText("##Teksc_3_2", searchName, IM_ARRAYSIZE(searchName));
+                SameLine();
+                if (Button("Cari")){
                     isFound = false;
                     cout << "Search name: " << searchName << endl;
                     for (const string& name : siswa){
@@ -213,11 +214,11 @@ class Window{
                         }
                     }
                     if (!isFound){
-                        ImGui::Text("Siswa tidak ditemukan");
+                        Text("Siswa tidak ditemukan");
                     }
                 }
                 if (isFound){
-                    ImGui::Text("Siswa ditemukan: %s", searchName);
+                    Text("Siswa ditemukan: %s", searchName);
                 }
             }
 
@@ -228,11 +229,11 @@ class Window{
             }
 
             void tampilkanNilai(float nilai){
-                ImGui::Text("Nilai akhir: %f", nilai);
+                Text("Nilai akhir: %f", nilai);
                 if (nilai >= 75) {
-                    ImGui::Text("Selamat, Anda lulus!");
+                    Text("Selamat, Anda lulus!");
                 } else {
-                    ImGui::Text("Maaf, Anda tidak lulus!");
+                    Text("Maaf, Anda tidak lulus!");
                 }
             }
 
@@ -240,8 +241,8 @@ class Window{
 
             void showHarga(int pilihan, int jumlah, string namaMakanan = ""){
                 float harga = setHarga(pilihan, jumlah);
-                ImGui::Text("Makanan yang dipilih: %s", namaMakanan.c_str()); 
-                ImGui::Text("Harga: $%f", harga);
+                Text("Makanan yang dipilih: %s", namaMakanan.c_str()); 
+                Text("Harga: $%f", harga);
             }
 
             float setHarga(int pilihan, int jumlah){
@@ -259,23 +260,23 @@ class Window{
 
             void uiForPersegi(){
                 static float panjang = 0;
-                ImGui::Text("Masukkan Panjang");
-                ImGui::InputFloat("##PanjangSisi", &panjang);
-                ImGui::Text("%f x %f = %f", panjang, panjang, luasPersegi(panjang));
+                Text("Masukkan Panjang");
+                InputFloat("##PanjangSisi", &panjang);
+                Text("%f x %f = %f", panjang, panjang, luasPersegi(panjang));
             };
             void uiForPersegiPanjang(){
                 static float panjang = 0, lebar = 0;
-                ImGui::Text("Masukkan Panjang");
-                ImGui::InputFloat("##Panjang Sisi", &panjang);
-                ImGui::Text("Masukkan Lebar");
-                ImGui::InputFloat("##Lebar", &lebar);
-                ImGui::Text("%f x %f = %f", panjang, lebar, luasPersegiPanjang(panjang, lebar));
+                Text("Masukkan Panjang");
+                InputFloat("##Panjang Sisi", &panjang);
+                Text("Masukkan Lebar");
+                InputFloat("##Lebar", &lebar);
+                Text("%f x %f = %f", panjang, lebar, luasPersegiPanjang(panjang, lebar));
             };
             void uiForLingkaran(){
                 static float jari = 0;
-                ImGui::Text("Masukkan jari-jari");
-                ImGui::InputFloat("##Jari-Jari", &jari);
-                ImGui::Text("3.14 x %f x %f = %f", jari, jari, luasLingkaran(jari));
+                Text("Masukkan jari-jari");
+                InputFloat("##Jari-Jari", &jari);
+                Text("3.14 x %f x %f = %f", jari, jari, luasLingkaran(jari));
             };
 
             void renderPDF();
@@ -288,6 +289,99 @@ class Window{
 
         pertemuan6 praktikum6;
 
+        struct pertemuan7 {
+            struct Barang {
+                string nama;
+                int jumlah;
+                double harga;
+            };
+
+            struct Buku {
+                string judul;
+                string penulis;
+                int tahunTerbit;
+            };
+
+            struct Kamar {
+                string nomorKamar;
+                string tipe;
+                double harga;
+            };
+            struct Reservasi {
+                string namaPelanggan;
+                string tanggalMasuk;
+                string tanggalKeluar;
+            };
+
+            struct Jabatan {
+                string namaJabatan;
+            };
+            struct Karyawan {
+                string nama;
+                double gaji;
+                Jabatan jabatan;
+            };
+
+            void baseTable(char* label, auto tableData, int baris, int kolom, auto namaKolom){
+                 if (BeginTable(label, kolom, ImGuiTableFlags_Borders | ImGuiTableFlags_RowBg)) {
+                    // Setup columns
+                    TableSetupColumn("Nama Siswa");
+                    TableSetupColumn("NIS");
+                    TableSetupColumn("Nama Ibu");
+                    TableSetupColumn("NIK Ibu");
+                    // Display headers
+                    TableHeadersRow();
+
+                    for (int i = 1; i <= baris ; ++i){
+                        // Text("Kolom ke %i", i);
+                        TableNextRow(); // Start a new row
+
+                        TableSetColumnIndex(0); // Go to the first column
+                        Text("%s", tableData[i].namasiswa.c_str());
+                        
+                        TableSetColumnIndex(1); // Go to the first column
+                        Text("%i", tableData[i].NIS);
+                        
+                        TableSetColumnIndex(2); // Go to the first column
+                        Text("%s", tableData[i].NamaIbu.c_str());
+                        
+                        TableSetColumnIndex(3); // Go to the first column
+                        Text("%i", tableData[i].NIKIbu);
+
+                        TableSetColumnIndex(4); // Go to the first column
+                    }
+
+                    EndTable();
+                }    
+            }
+
+            void ui(){
+                Begin("Pertemuan 7");
+                Text("Pertemuan 7 Array");
+                contohPenggunaanArray();
+                studyKasus1();
+                studyKasus2();
+                studyKasus3();
+                studyKasus4();
+                studyKasus5();
+                contohTableArray2Dimensi();
+                contohTableArray3Dimensi();
+                End();
+            }
+
+            void contohPenggunaanArray();
+            void studyKasus1();
+            void studyKasus2();
+            void studyKasus3();
+            void studyKasus4();
+            void studyKasus5();
+
+            void contohTableArray2Dimensi();
+            void contohTableArray3Dimensi();
+        };
+
+        pertemuan7 praktikum7;
+
         struct TableDataSekolah {
 
             struct baseDataSiswa {
@@ -297,30 +391,36 @@ class Window{
                 int NIKIbu;
             };
 
-            struct TKTable {
-                baseDataSiswa dataSiswa[100];
+            struct TKTable : baseDataSiswa {
             };
 
-            struct SDTable {
-                baseDataSiswa dataSiswa[100];
+            struct SDTable : TKTable {
                 string asalTK;
             };
 
-            struct SMPTable {
-                baseDataSiswa dataSiswa[100];
-                string asalTK;
+            struct SMPTable : SDTable {
                 string asalSD;
                 int noIjazahSD;
             };
 
-            struct SMATable {
-                baseDataSiswa dataSiswa[100];
-                string asalTK;
-                string asalSD;
-                int noIjazahSD;
+            struct SMATable : SMPTable {
                 string asalSMP;
                 int noIjazahSMP;
             };
+
+            char* inputText(const char* label){
+                static char buffer[256];
+                SameLine();
+                InputText(label, buffer, 256);
+                return buffer;
+            }
+
+            int inputInt(const char* label){
+                static int value = 0;
+                SameLine();
+                InputInt(label, &value);
+                return value;
+            }
 
             void uidataSekolah();
             void submitToTKTable(string& namasiswa, string& namaIbu, int& NIS, int& NIKIbu);

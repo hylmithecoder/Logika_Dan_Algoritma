@@ -12,6 +12,7 @@ set(SOURCE_CODE
     src/scripts/HandleWindow.cpp
     src/headers/HandleWindow.hpp
     src/scripts/pertemuan6.cpp
+    src/scripts/pertemuan7.cpp
     src/scripts/pertemuan2.cpp
     src/scripts/materiarray.cpp
 )
