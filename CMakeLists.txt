@@ -13,14 +13,18 @@ set(SOURCE_CODE
     src/headers/HandleWindow.hpp
     src/scripts/pertemuan6.cpp
     src/scripts/pertemuan7.cpp
+    src/scripts/pertemuan10.cpp
     src/scripts/pertemuan2.cpp
     src/scripts/materiarray.cpp
+    src/scripts/uts.cpp
+    src/scripts/studicase.cpp
 )
 
 
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
 find_package(PkgConfig REQUIRED)
+find_package(nlohmann_json REQUIRED)
 pkg_check_modules(MUPDF REQUIRED mupdf)
 
 include_directories(
@@ -40,6 +44,7 @@ link_libraries(
     jpeg
     jbig2dec
     z
+    nlohmann_json::nlohmann_json
 )
 
 set(Vendor

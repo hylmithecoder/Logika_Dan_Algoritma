@@ -7,7 +7,15 @@
 #include <mupdf/fitz.h>
 #include "backends/imgui_impl_opengl3.h"
 #include <vector>
+#include <filesystem>
+#include <cstdlib>
+#include <ctime> 
 #include "imgui.h"
+#include <fstream>
+#include <nlohmann/json.hpp>
+
+namespace fs = std::filesystem;
+using namespace nlohmann;
 using namespace std;
 using namespace ImGui;
 
@@ -457,6 +465,225 @@ class Window{
 
         TableDataSekolah dataSekolah;
 
+        struct UTS {
+            void handleUI();
+            void soal1();
+            float luasPersegi(float sisi){
+                float hasil = 6 * sisi * sisi;
+                return hasil;
+            }
+            float volumeKubus(float sisi){
+                float hasil = sisi * sisi * sisi;
+                return hasil;
+            }
+            void soal2();
+            void bilPrima(int angka){
+                for (int i = 2; i < angka; i++){
+                    if (angka % i == 0){
+                        Text( "Bilangan %d bukan bilangan prima", angka);
+                        return;
+                    }
+                }
+                Text("Bilangan %d adalah bilangan prima", angka);
+            }
+            void soal3();
+            int faktorial(int angka){
+                int hasil = 1;
+                for (int i = 1; i <= angka; i++){
+                    hasil *= i;
+                }
+                return hasil;
+            }
+            struct Baris {
+                int bil;
+            };
+
+            struct Matrix {
+                Baris baris[4];
+            };
+
+            Matrix matrix[5];
+            int currentBaris = 0;
+
+            void pushToMatrix(int bil1, int bil2, int bil3, Matrix matrix[]){
+                matrix[currentBaris].baris[1].bil = bil1;
+                matrix[currentBaris].baris[2].bil = bil2;
+                matrix[currentBaris].baris[3].bil = bil3;
+            }
+
+            void showMatrix(Matrix matrix[]){
+                if (BeginTable("matrix", 4, ImGuiTableFlags_Resizable | ImGuiTableFlags_Reorderable | ImGuiTableFlags_Hideable)){
+                    TableSetupColumn("1");
+                    TableSetupColumn("2");
+                    TableSetupColumn("3");
+                    TableSetupColumn("4");
+                    TableHeadersRow();
+                    for (int i = 0; i < 4; i++){
+                        TableNextRow();
+                        TableSetColumnIndex(0);
+                        Text("%i", matrix[i].baris[1].bil);
+                        TableSetColumnIndex(1);
+                        Text("%i", matrix[i].baris[2].bil);
+                        TableSetColumnIndex(2);
+                        Text("%i", matrix[i].baris[3].bil);
+                        TableSetColumnIndex(3);
+                        int total = matrix[i].baris[1].bil + matrix[i].baris[2].bil + matrix[i].baris[3].bil;
+                        Text("%i", total);
+                    }
+                    EndTable();
+                }
+            }
+
+            void soal4();
+        };
+        UTS uts;
+
+        struct Pertemuan10 {
+            void windowPer10();
+            struct Soal1{
+                int currentBaris = 0;
+                struct Pegawai
+                {
+                    string nama;
+                    int golongan;
+                    int gaji, gajiKotor;
+                };
+
+                int tetapkanGaji(int gol){
+                    cout << "Gol: " << gol << endl;
+                    switch (gol){
+                        case 1:
+                            return 2000000;
+                            break;
+                        case 2:
+                            return 2200000;
+                            break;
+                        case 3:
+                            return 2600000;
+                            break;
+                        case 4:
+                            return 3000000;
+                            break;
+                        default:
+                            exit(0);
+                            break;
+                    }
+                }
+
+                int setTunjangan(int gol, int gaji){
+                    int total;
+                    if (gol == 1){
+                        total = gaji * 2 / 100;
+                    } else if (gol == 2){
+                        total = gaji * 3 / 100;
+                    } else if (gol == 3){
+                        total = gaji * 4 / 100;
+                    } else if (gol == 4){
+                        total = gaji * 6 / 100;
+                    }
+                    return total;
+                }
+
+                int uangTransport(int hari){
+                    return hari * 30000;
+                }
+
+                int PPH(int gaji){
+                    return gaji * 10 / 100;
+                }
+
+                vector<int> hitungTotalGajiDanPajak(Pegawai peg[]);
+                
+
+                void showPegawai(Pegawai peg[]);
+                void inputPegawaiHandler(string currentName, int gaji, int gajiKotor, int golongan, Pegawai peg[]);
+
+                Pegawai peg[50];
+                void handleSoal1();
+            };
+            Soal1 soal1;
+
+            struct Soal2 {
+                int HK = 30000, HM = 40000, targetLaba;
+
+                vector<int> totalTargetLaba(int currentTargetLaba){
+                    vector<int> labaPerHari;
+                    while (currentTargetLaba >= 0){
+                        currentTargetLaba -= targetLaba / 2;
+                        labaPerHari.push_back(currentTargetLaba);
+                    }
+                    return labaPerHari;
+                }
+
+                int produksiKursi(int laba){
+                    int totalProduksiKursi = 0;
+                    while (laba >= HK){
+                        laba -= HK;
+                        totalProduksiKursi += 1;
+                    }
+                    return totalProduksiKursi;
+                }
+
+                int produksiMeja(int laba){
+                    int totalProduksiMeja = 0;
+                    while (laba >= HM){
+                        laba -= HM;
+                        totalProduksiMeja += 1;
+                    }
+                    return totalProduksiMeja;
+                }
+                void handleSoal2();
+            };
+            Soal2 soal2;
+        };
+
+        Pertemuan10 per10;
+
+        struct StudyCase {
+            void windowStudyCase();
+            struct Case1PunyaDaniel{
+                void handleCase1();
+                double BMI(double bb, double tb){
+                    tb /= 100;
+                    double tb2 = tb * tb;
+                    cout << tb2 << endl;
+                    return bb / tb2;
+                }
+
+                void setKeidealan(double idealIndex){
+                    if (idealIndex < 18.5){
+                        Text("Kurus");
+                    } else if (idealIndex >= 18.5 && idealIndex <= 24.9){
+                        Text("Normal");
+                    } else if (idealIndex >= 25 && idealIndex <= 29.9){
+                        Text("Gemuk");
+                    } else {
+                        Text("Obesitas");
+                    }
+                }
+            };
+            Case1PunyaDaniel case1;
+
+            struct Case2PunyaWalady {
+                vector<string> listName;
+                void addName(vector<string>& listName, string name);
+                void handleCase2();
+                int gacha(int index);
+                void showListName(vector<string>& listName);
+            };
+
+            Case2PunyaWalady case2;
+
+            struct Case3PunyaSeptian {
+                string nameFile = "database/db.json";
+                void readDb();
+                void handleCase3();
+
+            };
+            Case3PunyaSeptian case3;
+        };
+        StudyCase studyCase;
+        
         vector<GLuint> pageTextures;
 
     private:

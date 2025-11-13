@@ -201,6 +201,8 @@ void Window::initMuPDF() {
 
 void Window::init(){
 
+    srand(static_cast<unsigned int>(time(0)));
+    
     if (!glfwInit()){
         return;
     }
@@ -367,6 +369,9 @@ void Window::Update(ImGuiIO& io){
         praktikum6.uipertemuan6();
         dataSekolah.uidataSekolah();
         praktikum7.ui();
+        uts.handleUI();
+        per10.windowPer10();
+        studyCase.windowStudyCase();
 
         ImGui::End();
         // Render
