@@ -641,7 +641,27 @@ class Window{
 
         struct StudyCase {
             void windowStudyCase();
-            struct Case1PunyaDaniel{
+            struct Case1PunyaFauzanFadhil{
+                int angkaTerbesar(vector<int> angka){
+                    int terbesar = angka[0];
+                    for (int i = 1; i < angka.size(); i++){
+                        if (angka[i] > terbesar){
+                            terbesar = angka[i];
+                        }
+                    }
+                    return terbesar;
+                }; 
+
+                int angkaTerkecil(vector<int> angka){
+                    int terkecil = angka[0];
+                    for (int i = 1; i < angka.size(); i++){
+                        if (angka[i] < terkecil){
+                            terkecil = angka[i];
+                        }
+                    }
+                    return terkecil;
+                }
+                
                 void handleCase1();
                 double BMI(double bb, double tb){
                     tb /= 100;
@@ -662,7 +682,7 @@ class Window{
                     }
                 }
             };
-            Case1PunyaDaniel case1;
+            Case1PunyaFauzanFadhil case1;
 
             struct Case2PunyaWalady {
                 vector<string> listName;
@@ -676,6 +696,12 @@ class Window{
 
             struct Case3PunyaSeptian {
                 string nameFile = "database/db.json";
+                struct users {
+                    string username;
+                    string password;
+                };
+                void tambahUser(string username, string password, vector<users>& currentUser);
+                vector<users> user;
                 void readDb();
                 void handleCase3();
 
