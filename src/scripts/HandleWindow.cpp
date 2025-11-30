@@ -268,6 +268,8 @@ void Window::init(){
     praktikum4.currentPageTextures = readPDFFile(filePaths[1]);
     praktikum6.totalPages = getPagePDF(filePaths[2]);
     praktikum6.currentPageTextures = readPDFFile(filePaths[2]);
+    per13.totalPages = getPagePDF(filePaths[3]);
+    per13.currentPageTextures = readPDFFile(filePaths[3]);
 }
 
 void Window::Clean(){
@@ -372,6 +374,8 @@ void Window::Update(ImGuiIO& io){
         uts.handleUI();
         per10.windowPer10();
         studyCase.windowStudyCase();
+        per12.windowPer12();
+        per13.windowPer13();
 
         ImGui::End();
         // Render

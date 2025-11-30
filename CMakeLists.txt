@@ -3,23 +3,7 @@ project(LogikaAndAlgoritma)
 
 set(CMAKE_CXX_STANDARD 26)
 
-set(SOURCE_CODE
-    src/scripts/main.cpp
-    src/scripts/samplelogic.cpp
-    src/headers/samplelogic.hpp
-    src/scripts/algoritmabensin.cpp
-    src/headers/algoritmabensin.hpp
-    src/scripts/HandleWindow.cpp
-    src/headers/HandleWindow.hpp
-    src/scripts/pertemuan6.cpp
-    src/scripts/pertemuan7.cpp
-    src/scripts/pertemuan10.cpp
-    src/scripts/pertemuan2.cpp
-    src/scripts/materiarray.cpp
-    src/scripts/uts.cpp
-    src/scripts/studicase.cpp
-)
-
+file(GLOB_RECURSE SOURCE_CODE src/scripts/*.cpp)
 
 set(OpenGL_GL_PREFERENCE "GLVND")
 find_package(OpenGL REQUIRED)
@@ -47,14 +31,6 @@ link_libraries(
     nlohmann_json::nlohmann_json
 )
 
-set(Vendor
-    vendor/imgui/imgui.cpp
-    vendor/imgui/imgui_demo.cpp
-    vendor/imgui/imgui_draw.cpp
-    vendor/imgui/imgui_tables.cpp
-    vendor/imgui/imgui_widgets.cpp
-    vendor/imgui/backends/imgui_impl_glfw.cpp
-    vendor/imgui/backends/imgui_impl_opengl3.cpp
-)
+file(GLOB_RECURSE Vendor vendor/imgui/*.cpp vendor/imgui/backends/*.cpp)
 
 add_executable(${PROJECT_NAME} ${SOURCE_CODE} ${Vendor})

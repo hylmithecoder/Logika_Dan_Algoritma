@@ -131,9 +131,13 @@ int Window::StudyCase::Case2PunyaWalady::gacha(int index){
 void Window::StudyCase::Case3PunyaSeptian::handleCase3(){
     static int setJumlahUser = 0, jumlahUser = 0, totalUser = 0;
     static char username[256] = "", password[256] = "";
-    static bool login = false;
+    static bool login = false, readFile = false;
     static string response = "";
     Separator();
+    if (!readFile){
+        readDb();
+        readFile = true;
+    }
     Text("Study case 3 dari Septian\nLogin Sederhana");
     if (setJumlahUser != 0){
         Text("1. Nama");
@@ -147,6 +151,7 @@ void Window::StudyCase::Case3PunyaSeptian::handleCase3(){
                 string convertedUsername = username;
                 string convertedPassword = password;
                 tambahUser(convertedUsername, convertedPassword, user);
+                addToJson(convertedUsername, convertedPassword);
                 totalUser++;
             }
         } else {
@@ -190,10 +195,46 @@ void Window::StudyCase::Case3PunyaSeptian::readDb(){
         fs::create_directory("database");
     }
 
-    ifstream f("example.json");
+    ifstream f(nameFile);
     if (!f.is_open()) {
         cout << "File JSON tidak ada" << endl;
     }
 
-    json data = json::parse(f);
+    json data;
+    try {
+        f >> data; // Directly read into a json object
+    } catch (const json::parse_error& e) {
+        cout << "JSON parse error: " << e.what() << endl;
+    }
+
+    // Ensure the parsed data is indeed a JSON array
+    if (!data.is_array()) {
+        cerr << "JSON data is not an array!" << endl;
+    }
+
+    // Iterate through the array elements
+    for (const auto& person : data) {
+        // Access elements of each object in the array
+        cout << "username: " << person["username"].get<string>() << endl;
+        cout << "password: " << person["password"].get<string>() << endl;
+        cout << "--------------------" << endl;
+    }
+
+    users currentUser;
+    for (int i = 0; i < data.size(); i++){
+        currentUser.username = data[i]["username"].get<string>();
+        currentUser.password = data[i]["password"].get<string>();
+        user.push_back(currentUser);
+    }
+
+    f.close();
+}
+
+void Window::StudyCase::Case3PunyaSeptian::addToJson(string username, string password){
+    json data = {
+        {"username", username},
+        {"password", password}
+    };
+    ofstream f("database/db.json");
+    f << data << endl;
 }

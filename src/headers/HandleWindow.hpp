@@ -13,11 +13,15 @@
 #include "imgui.h"
 #include <fstream>
 #include <nlohmann/json.hpp>
+#include <stack>
+#include <queue>
 
 namespace fs = std::filesystem;
 using namespace nlohmann;
 using namespace std;
 using namespace ImGui;
+
+#define MAX 5
 
 class Window{
     public:
@@ -704,11 +708,217 @@ class Window{
                 vector<users> user;
                 void readDb();
                 void handleCase3();
+                void addToJson(string username, string password);
 
             };
             Case3PunyaSeptian case3;
         };
         StudyCase studyCase;
+
+        struct Pertemuan12 {
+            void windowPer12();
+            class Stack {
+                private:
+                    int arr[MAX];
+                    int top;
+                public:
+                    // Konstruktor untuk menginisialisasi stack
+                    Stack() {
+                        top = -1;
+                    }
+                    // Operasi Push: Menambahkan elemen ke stack
+                    void push(int val) {
+                        if (top == MAX - 1) {
+                            cout << "Stack Overflow" << endl;
+                        } else {
+                            arr[++top] = val;
+                            cout << "Elemen " << val << " telah ditambahkan ke stack." << endl;
+                        }
+                    }
+
+                    // Operasi Pop: Mengeluarkan elemen dari stack
+                    void pop() {
+                        if (top == -1) {
+                            cout << "Stack Underflow" << endl;
+                        } else {
+                            cout << "Elemen " << arr[top--] << " telah dikeluarkan dari stack." << endl;
+                        }
+                    }
+
+                    // Operasi untuk melihat elemen teratas
+                    void peek() {
+                        if (top == -1) {
+                            Text("Stack kosong!");
+                        } else {
+                            Text("Semua elemen dalam stack:");
+                            for (int i = 0; i <= top; i++) {
+                                Text("%i ", arr[i]);
+                            }
+                            Text("Elemen teratas: %i", arr[top]);
+                        }
+                    }
+
+                    // Cek apakah stack kosong
+                    bool isEmpty() {
+                        return (top == -1);
+                    }
+                };
+
+            class Queue {
+                private:
+                    int arr[MAX];
+                    int front, rear;
+                    
+                public:
+                    // Konstruktor untuk menginisialisasi queue
+                    Queue() {
+                        front = -1;
+                        rear = -1;
+                    }
+
+                    // Operasi Enqueue: Menambahkan elemen ke queue
+                    void enqueue(int val) {
+                        if (rear == MAX - 1) {
+                            cout << "Queue Overflow" << endl;
+                        } else {
+                            if (front == -1) {
+                                front = 0;  // Jika queue kosong
+                            }
+                            arr[++rear] = val;
+                            cout << "Elemen " << val << " telah ditambahkan ke queue." << endl;
+                        }
+                    }
+
+                    // Operasi Dequeue: Mengeluarkan elemen dari queue
+                    void dequeue() {
+                        if (front == -1 || front > rear) {
+                            cout << "Queue Underflow" << endl;
+                        } else {
+                            cout << "Elemen " << arr[front++] << " telah dikeluarkan dari queue." << endl;
+                        }
+                    }
+
+                    // Cek apakah queue kosong
+                    bool isEmpty() {
+                        return (front == -1 || front > rear);
+                    }
+
+                    // Menampilkan elemen paling depan
+                    void peek() {
+                        if (front == -1 || front > rear) {
+                            Text("Queue kosong!");
+                        } else {
+                            Text("Semua elemen dalam queue:");
+                            for (int i = front; i <= rear; i++) {
+                                Text("%i ", arr[i]);
+                            }
+                            Text("Elemen paling depan: %i", arr[front]);
+                        }
+                    }
+                };
+            Stack stak;
+            Queue queueClass;
+            void soal1();
+            void soal2();
+            void reverseNumbers(int arr[], int n) {
+                stack<int> s;
+
+                // Menambahkan elemen ke dalam stack
+                for (int i = 0; i < n; i++) {
+                    s.push(arr[i]);
+                }
+
+                // Mengeluarkan elemen dari stack untuk membalikkan urutan
+                Text("Urutan terbalik: ");
+                if (!s.empty()) {
+                    Text(" %d ", s.top());
+                }
+            }
+            void soal3();
+
+            void bankQueueSimulation();
+            void soal4();
+        };
+        Pertemuan12 per12;
+
+        struct Pertemuan13
+        {
+            vector<GLuint> currentPageTextures;
+            int totalPages;
+            int currentPage = 0;
+            void windowPer13();
+            void soal1();
+            bool linearSearch(int arr[], int n, int target) {
+                for (int i = 0; i < n; i++) {
+                    if (arr[i] == target) {
+                        return true;
+                    }
+                }
+                return false;
+            }
+            void soal2();
+            bool binarySearch(int arr[], int n, int target) {
+                int low = 0, high = n - 1;
+                while (low <= high) {
+                    int mid = low + (high - low) / 2;
+                    if (arr[mid] == target) {
+                        return true;
+                    } else if (arr[mid] < target) {
+                        low = mid + 1;
+                    } else {
+                        high = mid - 1;
+                    }
+                }
+                return false;
+            }
+
+            void soal3();
+            void bubbleSort(int arr[], int n) {
+                for (int i = 0; i < n-1; i++) {
+                    for (int j = 0; j < n-i-1; j++) {
+                        if (arr[j] > arr[j+1]) {
+                            swap(arr[j], arr[j+1]);
+                        }
+                    }
+                }
+            }
+
+            void soal4();
+            void selectionSort(int arr[], int n) {
+                for (int i = 0; i < n-1; i++) {
+                    int minIndex = i;
+                    for (int j = i+1; j < n; j++) {
+                        if (arr[j] < arr[minIndex]) {
+                            minIndex = j;
+                        }
+                    }
+                    swap(arr[i], arr[minIndex]);
+                }
+            }
+
+            void soal5();
+            int partition(int arr[], int low, int high) {
+                int pivot = arr[high];
+                int i = low - 1;
+                for (int j = low; j < high; j++) {
+                    if (arr[j] < pivot) {
+                        i++;
+                        swap(arr[i], arr[j]);
+                    }
+                }
+                swap(arr[i+1], arr[high]);
+                return i + 1;
+            }
+
+            void quickSort(int arr[], int low, int high) {
+                if (low < high) {
+                    int pi = partition(arr, low, high);
+                    quickSort(arr, low, pi - 1);
+                    quickSort(arr, pi + 1, high);
+                }
+            }
+        };
+        Pertemuan13 per13;
         
         vector<GLuint> pageTextures;
 
@@ -727,6 +937,7 @@ class Window{
         char* filePaths[6] = {
             "/home/hylmi/Downloads/Praktikum 2e-h - LOGIKA MATEMATIKA DALAM C++.docx.pdf",
             "/home/hylmi/Downloads/Praktikum 4 - Percabangan dalam Pemrograman.docx.pdf",
-            "/home/hylmi/Downloads/praktikum6.pdf"
+            "/home/hylmi/Downloads/praktikum6.pdf",
+            "/home/hylmi/Downloads/Praktikum 12 - ANALISIS KOMPLEKSITAS ALGORITMA.pdf"
         };
 };
