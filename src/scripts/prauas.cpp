@@ -1,7 +1,7 @@
 #include <HandleWindow.hpp>
 
 void Window::Prauas::handleWindowPraus(){
-    Begin("Prauas");
+    Begin("Pra UAS");
     soal1();
     soal2();
     soal3();
@@ -18,15 +18,18 @@ void Window::Prauas::soal1(){
     if (setTargetArray != 0){
         Text("Masukkan angka sebanyak %i kali", setTargetArray);
         InputInt("##angka", &angka);
-        if (Button("Input")){
-            int getAngka = angka;
-            cout << "current input: " << getAngka << endl;
-            arrayNormal.push_back(getAngka);
-            currentInput++;
-        }
 
-        if (currentInput > setTargetArray){
-            tentukanArrayGenap(arrayNormal);
+        if (currentInput >= setTargetArray){
+            showArray("Array Genap", genapArray);
+            showArray("Array Ganjil", ganjilArray);
+        } else {
+            if (Button("Input")){
+                int getAngka = angka;
+                cout << "current input: " << getAngka << endl;
+                arrayNormal.push_back(getAngka);
+                currentInput++;
+                tentukanArrayGenap(arrayNormal);
+            }
         }
     } else {
         Text("Masukkan banyak elemen dalam array:");
@@ -78,17 +81,18 @@ void Window::Prauas::soal4(){
     static double getLuas = 0;
     Separator();
     Text("Buat fungsi luasLingkaran(r) yang mengembalikan luas (gunakan konstanta pi = 3.14)");
-    if (setJari != 0){
+    Text("Masukkan jari-jari lingkaran: ");
+    SameLine();
+    InputInt("##InputJari", &jari);
+    if (Button("Input Jari-jari")){
+        setJari = jari;
         getLuas = luasLingkaran(setJari);
-        Text("Luas Lingkaran: %d", getLuas);
-    } else {
-        Text("Masukkan jari-jari lingkaran: ");
-        SameLine();
-        InputInt("##InputJari", &jari);
-        if (Button("Input Jari-jari")){
-            setJari = jari;
-        }
+        cout << "Luas Lingkaran: " << getLuas << endl;
     }
+
+    if (setJari != 0){
+        Text("Luas Lingkaran: %f", getLuas);
+    } 
 }
 
 void Window::Prauas::soal5(){
@@ -97,17 +101,24 @@ void Window::Prauas::soal5(){
     Separator();
     Text("Input array integer, lalu tampilkan jumlah pasangan elemen yang jika di jumlahkan menghasilkan angka tertentu");
     if (setNormalArray != 0){
-        Text("Masukkan angka sebanyak %i kali", setNormalArray);
-        InputInt("##angka", &input);
-        if (Button("Input")){
-            int getAngka = input;
-            cout << "current input: " << getAngka << endl;
-            normalArray.push_back(getAngka);
-            currentInput++;
-        }
-
-        if (currentInput > setNormalArray){
-            pasanganArray(normalArray);
+        if (currentInput >= setNormalArray){
+            for (int i = 0; i < pasangan.size(); i++){
+                Text("Pasangan %i: %d dan %d", i + 1, pasangan[i].a, pasangan[i].b);
+                Text("Penjumlahan pasangan %i: %d", i + 1, pasangan[i].a + pasangan[i].b);
+            }
+        } else {
+            Text("Masukkan angka sebanyak %i kali", setNormalArray);
+            InputInt("##angkasoal5", &input);
+            if (Button("Submit")){
+                int getAngka = input;
+                cout << "current input: " << getAngka << endl;
+                normalArray.push_back(getAngka);
+                if (normalArray.size() == setNormalArray){
+                    cout << "current input: " << normalArray.size() << endl;
+                    pasanganArray(normalArray);
+                }
+                currentInput++;
+            }
         }
 
     } else {

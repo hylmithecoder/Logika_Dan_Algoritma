@@ -923,23 +923,21 @@ class Window{
         struct Prauas {
             void handleWindowPraus();
             void soal1();
-            void tentukanArrayGenap(vector<int>& currentArray){
-                vector<int> genapArray, ganjilArray;
-                
+            vector<int> genapArray, ganjilArray;
+
+            void tentukanArrayGenap(vector<int> currentArray){
                 for (int i = 0; i < currentArray.size(); i++){
                     if (currentArray[i] % 2 == 0){
-                        ganjilArray.push_back(currentArray[i]);
-                    } else {
                         genapArray.push_back(currentArray[i]);
+                    } else {
+                        ganjilArray.push_back(currentArray[i]);
                     }
                 }
+            }
 
-                for (int i = 0; i < genapArray.size(); i++){
-                    Text("Bilangan genap: %d", genapArray[i]);
-                }
-
-                for (int i = 0; i < ganjilArray.size(); i++){
-                    Text("Bilangan genap: %d", ganjilArray[i]);
+            void showArray(string title, vector<int> currentArray){
+                for (int i = 1; i < currentArray.size(); i++){
+                    Text("%s: %d", title.c_str(), currentArray[i]);
                 }
             }
 
@@ -949,27 +947,33 @@ class Window{
                 for (int i = 0; i < n; i++){
                     line += "-";
                 }
-                Text("%s", line);
+                Text("%s", line.c_str());
             }
             void soal3();
             void soal4();
             const double pi = 3.14;
-            double luasLingkaran(int r){ return pi * r * r; }
+            double luasLingkaran(int r)
+            { 
+                double luas = pi * r * r;
+                cout << "Luas " << luas << endl;
+                return luas; 
+            }
             void soal5();
-            void pasanganArray(vector<int>& currentArray){
-                vector<int> pasangan;
+            struct Pasangan {
+                int a, b;
+            };
+            vector<Pasangan> pasangan;
+
+            void pasanganArray(vector<int> currentArray){
+                cout << currentArray.size() << endl;
+                Pasangan currentPasangan;
                 for (int i = 0; i < currentArray.size(); i++){
                     for (int j = i + 1; j < currentArray.size(); j++){
-                        pasangan.push_back(currentArray[i]);
-                        pasangan.push_back(currentArray[j]);
+                        currentPasangan.a = currentArray[i];
+                        currentPasangan.b = currentArray[j];
                     }
                 }
-
-                int jumlahPasangan;
-                for (int i = 0; i < pasangan.size(); i++){
-                    jumlahPasangan = pasangan[i] + pasangan[i + 1];
-                    Text("Jumlah pasangan: %d", jumlahPasangan);
-                }
+                pasangan.push_back(currentPasangan);
             }
         };
         Prauas prauas;
