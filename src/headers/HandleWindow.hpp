@@ -977,6 +977,48 @@ class Window{
             }
         };
         Prauas prauas;
+
+        struct Pertemuan14 {
+            void handleWindow();
+            void soal1();
+            struct Kendaraan {
+                float berat; // Berat kendaraan dalam ton
+                float posisi; // Posisi kendaraan di sepanjang jembatan
+            };
+            float hitungBebanTotal(const vector<Kendaraan>& kendaraan, float panjangJembatan) {
+                float bebanTotal = 0.0;
+                for (const auto& k : kendaraan) {
+                    bebanTotal += k.berat;
+                }
+                return bebanTotal;
+            }
+
+            void soal2();
+            float hitungTekanan(float kecepatanAwal, float kecepatanAkhir, float densitas, float ketinggianAwal, float ketinggianAkhir) {
+                return (0.5 * densitas * (pow(kecepatanAwal, 2) - pow(kecepatanAkhir, 2))) + (densitas * 9.81 * (ketinggianAwal - ketinggianAkhir));
+            }
+
+            void soal3();
+            float hitungSuhuAkhir(float kapasitasPanas, float massa, float energi) {
+                return energi / (kapasitasPanas * massa);
+            }
+
+            void soal4();
+            float hitungLabaBersih(float pendapatan, float biayaProduksi, float biayaOperasional) {
+                return pendapatan - biayaProduksi - biayaOperasional;
+            }
+
+            void soal5();
+            int hitungStokTersisa(int jumlahAwal, int barangTerjual, int barangDiterima) {
+                return jumlahAwal - barangTerjual + barangDiterima;
+            }
+
+            void soal6();
+            float hitungHargaAkhir(float hargaAwal, float diskon) {
+                return hargaAwal * (1 - diskon);
+            }
+        };
+        Pertemuan14 per14;
         
         vector<GLuint> pageTextures;
 
