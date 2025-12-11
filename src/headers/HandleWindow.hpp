@@ -919,6 +919,60 @@ class Window{
             }
         };
         Pertemuan13 per13;
+
+        struct Prauas {
+            void handleWindowPraus();
+            void soal1();
+            void tentukanArrayGenap(vector<int>& currentArray){
+                vector<int> genapArray, ganjilArray;
+                
+                for (int i = 0; i < currentArray.size(); i++){
+                    if (currentArray[i] % 2 == 0){
+                        ganjilArray.push_back(currentArray[i]);
+                    } else {
+                        genapArray.push_back(currentArray[i]);
+                    }
+                }
+
+                for (int i = 0; i < genapArray.size(); i++){
+                    Text("Bilangan genap: %d", genapArray[i]);
+                }
+
+                for (int i = 0; i < ganjilArray.size(); i++){
+                    Text("Bilangan genap: %d", ganjilArray[i]);
+                }
+            }
+
+            void soal2();
+            void printLine(int n){
+                string line = "";
+                for (int i = 0; i < n; i++){
+                    line += "-";
+                }
+                Text("%s", line);
+            }
+            void soal3();
+            void soal4();
+            const double pi = 3.14;
+            double luasLingkaran(int r){ return pi * r * r; }
+            void soal5();
+            void pasanganArray(vector<int>& currentArray){
+                vector<int> pasangan;
+                for (int i = 0; i < currentArray.size(); i++){
+                    for (int j = i + 1; j < currentArray.size(); j++){
+                        pasangan.push_back(currentArray[i]);
+                        pasangan.push_back(currentArray[j]);
+                    }
+                }
+
+                int jumlahPasangan;
+                for (int i = 0; i < pasangan.size(); i++){
+                    jumlahPasangan = pasangan[i] + pasangan[i + 1];
+                    Text("Jumlah pasangan: %d", jumlahPasangan);
+                }
+            }
+        };
+        Prauas prauas;
         
         vector<GLuint> pageTextures;
 

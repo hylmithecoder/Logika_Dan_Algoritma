@@ -73,7 +73,7 @@ void Window::Pertemuan13::soal2(){
         if (Button("Cari biner")){
             setTarget = target;
             for (int i = 0; i < setBanyak; i++){
-                arr[i] = i; // Mengisi array dengan bilangan genap
+                arr[i] = i;
             }
             auto start = chrono::high_resolution_clock::now();
             found = binarySearch(arr, setBanyak, target);
@@ -110,7 +110,7 @@ void Window::Pertemuan13::soal3(){
     if (arr != nullptr){
         if (Button("Urutkan Array")){
             for (int i = 0; i < setBanyak; i++){
-                arr[i] = rand() % setBanyak; // Mengisi array dengan bilangan acak
+                arr[i] = rand() % setBanyak;
             }
             auto start = chrono::high_resolution_clock::now();
             isClicked = true;
@@ -144,7 +144,7 @@ void Window::Pertemuan13::soal4(){
     {
         if (Button("Selection Sort")){
             for (int i = 0; i < setBanyak; i++){
-                arr[i] = rand() % setBanyak; // Mengisi array dengan bilangan acak
+                arr[i] = rand() % setBanyak;
             }
             auto start = chrono::high_resolution_clock::now();
             selectionSort(arr, setBanyak);

@@ -376,6 +376,7 @@ void Window::Update(ImGuiIO& io){
         studyCase.windowStudyCase();
         per12.windowPer12();
         per13.windowPer13();
+        prauas.handleWindowPraus();
 
         ImGui::End();
         // Render
