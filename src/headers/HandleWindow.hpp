@@ -1019,6 +1019,45 @@ class Window{
             }
         };
         Pertemuan14 per14;
+
+        struct UASSemester1 {
+            void handleWindow();
+
+            struct DataKaryawan {
+                string nama;
+                int tunjangan;
+                int slipGaji;
+                int potongan;
+                int gaji;
+            };
+            vector<DataKaryawan> dataKaryawan;
+
+            void AddDataKaryawan(string nama, int tunjangan, int slipGaji, int potongan, int gaji);
+            void ShowTableKaryawan();
+            void soalNo2();
+
+            vector<int> penjualan;
+            void soalNo4();
+
+            void soalNo6();
+            void cetakMundur(int n);
+
+            void soalNo8();
+            void cetakFibonacci(int n);
+
+            vector<int> array;
+            void soalNo10();
+            void SortArray(vector<int> currentArray);
+
+            struct Mahasiswa {
+                string nama;
+                int nilai;
+            };
+            vector<Mahasiswa> mahasiswa;
+            void SortRanking(vector<Mahasiswa> currentArray);
+            void soalNo12();
+        };
+        UASSemester1 uas;
         
         vector<GLuint> pageTextures;
 
