@@ -4,7 +4,7 @@
 
 void Window::UASSemester1::handleWindow() {
     static int current_item_index = 0;
-    const char* choice[] = { "Soal 2", "Soal 4", "Soal 6", "Soal 8", "Soal 10", "Soal 12" };
+    const char* choice[] = { "Soal 2", "Soal 3", "Soal 4", "Soal 5", "Soal 6", "Soal 7", "Soal 8", "Soal 9", "Soal 10", "Soal 11", "Soal 12" };
     Begin("UAS Semester 1 Logika dan Algoritma");
     Text("JAWABAN UAS SEMESTER 1 LOGIKA DAN ALGORITMA PEMROGRAMAN");
     Text("Nama: Hylmi Muhammad Fiary Mahdi");
@@ -16,14 +16,24 @@ void Window::UASSemester1::handleWindow() {
     if (current_item_index == 0){
         soalNo2();
     } else if (current_item_index == 1){
-        soalNo4();
+        soalNo3();
     } else if (current_item_index == 2){
-        soalNo6();
+        soalNo4();
     } else if (current_item_index == 3){
-        soalNo8();
+        soalNo5();
     } else if (current_item_index == 4){
-        soalNo10();
+        soalNo6();
     } else if (current_item_index == 5){
+        soalNo7();
+    } else if (current_item_index == 6){
+        soalNo8();
+    } else if (current_item_index == 7){
+        soalNo9();
+    } else if (current_item_index == 8){
+        soalNo10();
+    } else if (current_item_index == 9){
+        soalNo11();
+    } else if (current_item_index == 10){
         soalNo12();
     }
 
@@ -94,6 +104,38 @@ void Window::UASSemester1::ShowTableKaryawan() {
     }
 }
 
+void Window::UASSemester1::soalNo3(){
+    static int setTargetArray = 0, arrayInput = 0, angka = 0, currentInput = 0;
+    static vector<int> arrayNormal;
+    
+    Text("Soal 3");
+    Text("Buat Program yang memisahkan array ke dalam dua array baru: arrayGenap dan arrayGanjil");
+    if (setTargetArray != 0){
+        Text("Masukkan angka sebanyak %i kali", setTargetArray);
+        InputInt("##angka", &angka);
+
+        if (currentInput >= setTargetArray){
+            showArray("Array Genap", genapArray);
+            showArray("Array Ganjil", ganjilArray);
+        } else {
+            if (Button("Input")){
+                int getAngka = angka;
+                cout << "current input: " << getAngka << endl;
+                arrayNormal.push_back(getAngka);
+                currentInput++;
+                tentukanArrayGenap(arrayNormal);
+            }
+        }
+    } else {
+        Text("Masukkan banyak elemen dalam array:");
+        SameLine();
+        InputInt("##InputBanyakElemen", &arrayInput);
+        if (Button("Buat Array")){
+            setTargetArray = arrayInput;
+        }
+    }
+}
+
 void Window::UASSemester1::soalNo4() {
     static int setPenjualan;
     Separator();
@@ -116,6 +158,31 @@ void Window::UASSemester1::soalNo4() {
     }
 }
 
+void Window::UASSemester1::soalNo5() {
+    static int setNilai, nilai = 0;
+    Separator();
+    Text("Soal Nomor 5");
+    Text("Kasus penjumlahan deret, Gunakan rekursif untuk menghitung jumlah bilangan dari 1 sampai n");
+    if (setNilai != 0){
+        cetakDeret(setNilai);
+    } else {
+        Text("Masukkan Nilai: ");
+        InputInt("##nilai", &nilai);
+        if (Button("Tambah Nilai")){
+            setNilai = nilai;
+        }
+    }
+}
+
+void Window::UASSemester1::cetakDeret(int n) {
+    if (n == 1){
+        Text("%d", n);
+    } else {
+        cetakDeret(n - 1);
+        Text("%d", n);
+    }
+}
+
 void Window::UASSemester1::soalNo6() {
     static int setNilai, nilai = 0;
     Separator();
@@ -134,6 +201,31 @@ void Window::UASSemester1::soalNo6() {
 
 void Window::UASSemester1::cetakMundur(int n) {
     for (int i = n; i >= 0; i--){
+        Text("%d", i);
+    }
+}
+
+void Window::UASSemester1::soalNo7() {
+    static int setNilai, nilai = 0;
+    Separator();
+    Text("Soal Nomor 7");
+    Text("Perbandingan loop rekursif dan iterasi");
+    if (setNilai != 0){
+        Text("Iterasi");
+        cetakDeretIterasi(setNilai);
+        Text("Rekursif");
+        cetakDeret(setNilai);
+    } else {
+        Text("Masukkan Nilai: ");
+        InputInt("##nilai", &nilai);
+        if (Button("Tambah Nilai")){
+            setNilai = nilai;
+        }
+    }   
+}
+
+void Window::UASSemester1::cetakDeretIterasi(int n) {
+    for (int i = 1; i <= n; i++){
         Text("%d", i);
     }
 }
@@ -163,6 +255,31 @@ void Window::UASSemester1::cetakFibonacci(int n) {
         b = c;
     }   
 }
+
+void Window::UASSemester1::soalNo9() {
+    static int setNilai, nilai = 0;
+    Separator();
+    Text("Soal Nomor 9");
+    Text("Kasus operasi Stack, Buat program c++ yang mengimplementasikan push dan pop");
+    Text("Masukkan Nilai: ");
+    InputInt("##nilai", &nilai);
+    if (Button("Tambah Nilai")){
+        setNilai = nilai;
+        array.push_back(setNilai);
+    }
+    if (Button("Pop")){
+        array.pop_back();
+    }
+    
+    ShowTables(array);
+}
+
+void Window::UASSemester1::ShowTables(vector<int> currentArray) {
+    for (int i = 0; i < currentArray.size(); i++){
+        Text("%d", currentArray[i]);
+    }
+}
+
 
 void Window::UASSemester1::soalNo10() {
     static int buffer = 0, setArraySize, setNilai;
@@ -195,6 +312,10 @@ void Window::UASSemester1::SortArray(vector<int> currentArray) {
     for (int i = 0; i < currentArray.size(); i++){
         Text("%d", currentArray[i]);
     }
+}
+
+void Window::UASSemester1::soalNo11() {
+    Separator();   
 }
 
 void Window::UASSemester1::soalNo12() {

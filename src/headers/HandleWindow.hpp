@@ -1036,18 +1036,47 @@ class Window{
             void ShowTableKaryawan();
             void soalNo2();
 
+            void soalNo3();
+            vector<int> genapArray, ganjilArray;
+            void tentukanArrayGenap(vector<int> currentArray){
+                for (int i = 0; i < currentArray.size(); i++){
+                    if (currentArray[i] % 2 == 0){
+                        genapArray.push_back(currentArray[i]);
+                    } else {
+                        ganjilArray.push_back(currentArray[i]);
+                    }
+                }
+            }
+
+            void showArray(string title, vector<int> currentArray){
+                for (int i = 0; i < currentArray.size(); i++){
+                    Text("%s: %d", title.c_str(), currentArray[i]);
+                }
+            }
+
             vector<int> penjualan;
             void soalNo4();
+
+            void soalNo5();
+            void cetakDeret(int n);
 
             void soalNo6();
             void cetakMundur(int n);
 
+            void soalNo7();
+            void cetakDeretIterasi(int n);
+
             void soalNo8();
             void cetakFibonacci(int n);
+
+            void soalNo9();
+            void ShowTables(vector<int> currentArray);
 
             vector<int> array;
             void soalNo10();
             void SortArray(vector<int> currentArray);
+
+            void soalNo11();
 
             struct Mahasiswa {
                 string nama;
